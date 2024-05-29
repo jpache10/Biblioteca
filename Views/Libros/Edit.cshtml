@@ -1,0 +1,79 @@
+@model Biblioteca.Models.Libro
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Libro</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Identificador" />
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SignaturaTopografica" class="control-label"></label>
+                <input asp-for="SignaturaTopografica" class="form-control" />
+                <span asp-validation-for="SignaturaTopografica" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Isbn" class="control-label"></label>
+                <input asp-for="Isbn" class="form-control" />
+                <span asp-validation-for="Isbn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoBibliografia" class="control-label"></label>
+                <select asp-for="TipoBibliografia" class="form-control" asp-items="ViewBag.TipoBibliografia"></select>
+                <span asp-validation-for="TipoBibliografia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Autores" class="control-label"></label>
+                <select asp-for="Autores" class="form-control" asp-items="ViewBag.Autores"></select>
+                <span asp-validation-for="Autores" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Editora" class="control-label"></label>
+                <select asp-for="Editora" class="form-control" asp-items="ViewBag.Editora"></select>
+                <span asp-validation-for="Editora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnioPublicacion" class="control-label"></label>
+                <input asp-for="AnioPublicacion" class="form-control" />
+                <span asp-validation-for="AnioPublicacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ciencia" class="control-label"></label>
+                <select asp-for="Ciencia" class="form-control" asp-items="ViewBag.Ciencia"></select>
+                <span asp-validation-for="Ciencia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idioma" class="control-label"></label>
+                <select asp-for="Idioma" class="form-control" asp-items="ViewBag.Idioma"></select>
+                <span asp-validation-for="Idioma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

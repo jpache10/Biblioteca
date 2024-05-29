@@ -1,0 +1,75 @@
+@model Biblioteca.Models.PrestamoDevolucion
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>PrestamoDevolucion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NoPrestamo" class="control-label"></label>
+                <input asp-for="NoPrestamo" class="form-control" />
+                <span asp-validation-for="NoPrestamo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Empleado" class="control-label"></label>
+                <select asp-for="Empleado" class ="form-control" asp-items="ViewBag.Empleado"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Libro" class="control-label"></label>
+                <select asp-for="Libro" class ="form-control" asp-items="ViewBag.Libro"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Usuario" class="control-label"></label>
+                <select asp-for="Usuario" class ="form-control" asp-items="ViewBag.Usuario"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaPrestamo" class="control-label"></label>
+                <input asp-for="FechaPrestamo" class="form-control" />
+                <span asp-validation-for="FechaPrestamo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaDevolucion" class="control-label"></label>
+                <input asp-for="FechaDevolucion" class="form-control" />
+                <span asp-validation-for="FechaDevolucion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MontoXdia" class="control-label"></label>
+                <input asp-for="MontoXdia" class="form-control" />
+                <span asp-validation-for="MontoXdia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CantidadDias" class="control-label"></label>
+                <input asp-for="CantidadDias" class="form-control" />
+                <span asp-validation-for="CantidadDias" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comentario" class="control-label"></label>
+                <input asp-for="Comentario" class="form-control" />
+                <span asp-validation-for="Comentario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

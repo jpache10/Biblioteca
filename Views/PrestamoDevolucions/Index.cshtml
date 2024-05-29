@@ -1,0 +1,83 @@
+@model IEnumerable<Biblioteca.Models.PrestamoDevolucion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaPrestamo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaDevolucion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoXdia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadDias)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comentario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LibroNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaPrestamo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaDevolucion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoXdia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadDias)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comentario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoNavigation.Identificador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LibroNavigation.Identificador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioNavigation.Identificador)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.NoPrestamo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.NoPrestamo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.NoPrestamo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
