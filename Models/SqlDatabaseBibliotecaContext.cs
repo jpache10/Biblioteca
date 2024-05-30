@@ -33,8 +33,12 @@ public partial class SqlDatabaseBibliotecaContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:Biblioteca");
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+    //     optionsBuilder.UseSqlite(Configuration.GetConnectionString("WebApiDatabase"));
+    // }
+        // =>  optionsBuilder.UseSqlite("Name=ConnectionStrings:WebApiDatabase");
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
