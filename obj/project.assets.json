@@ -7839,24 +7839,26 @@
     ]
   },
   "packageFolders": {
-    "/Users/jesus/.nuget/packages/": {}
+    "C:\\Users\\dmoli\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/jesus/Projects/repos/Propietaria/Biblioteca/Biblioteca.csproj",
+      "projectUniqueName": "C:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj",
       "projectName": "Biblioteca",
-      "projectPath": "/Users/jesus/Projects/repos/Propietaria/Biblioteca/Biblioteca.csproj",
-      "packagesPath": "/Users/jesus/.nuget/packages/",
-      "outputPath": "/Users/jesus/Projects/repos/Propietaria/Biblioteca/obj/",
+      "projectPath": "C:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj",
+      "packagesPath": "C:\\Users\\dmoli\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/jesus/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\dmoli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7869,6 +7871,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -7915,7 +7922,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/8.0.1/libexec/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
