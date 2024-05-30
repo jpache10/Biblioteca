@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj": {}
+    "C:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj": {}
   },
   "projects": {
-    "c:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj": {
+    "C:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj",
+        "projectUniqueName": "C:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj",
         "projectName": "Biblioteca",
-        "projectPath": "c:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj",
+        "projectPath": "C:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\Biblioteca.csproj",
         "packagesPath": "C:\\Users\\dmoli\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\obj\\",
+        "outputPath": "C:\\Users\\dmoli\\Desktop\\proyectoBiblioteca\\Biblioteca\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dmoli\\AppData\\Roaming\\NuGet\\NuGet.Config",
