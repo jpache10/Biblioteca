@@ -8,7 +8,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -19,6 +23,15 @@ html {
 
 .main-background {
   background-color: #F5F5F5;
+}
+
+.title_main {
+  font-style: italic;
+  font-family: ABeeZee;
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 72px;
+  text-align: left;
 }
 
 body {

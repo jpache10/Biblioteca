@@ -19,9 +19,27 @@ namespace Biblioteca.Controllers
         }
 
         // GET: TiposBibliografium
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            return View(await _context.TiposBibliografia.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var tiposBibliografia = _context.TiposBibliografia.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                tiposBibliografia = tiposBibliografia.Where(l =>
+                    l.Descripcion.Contains(searchString)
+                );
+            }
+
+            var bibliografias = PaginatedList<TiposBibliografium>.Create(tiposBibliografia, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(bibliografias);
+
         }
 
         // GET: TiposBibliografium/Details/5
