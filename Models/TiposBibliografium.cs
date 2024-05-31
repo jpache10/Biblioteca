@@ -14,8 +14,7 @@ public partial class TiposBibliografium
     [StringLength(255)]
     public string? Descripcion { get; set; }
 
-    [StringLength(50)]
-    public string? Estado { get; set; }
+    public bool Estado { get; set; }
 
     [InverseProperty("TipoBibliografiaNavigation")]
     public virtual ICollection<Libro> Libros { get; set; } = new List<Libro>();

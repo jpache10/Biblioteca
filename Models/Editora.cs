@@ -14,8 +14,7 @@ public partial class Editora
     [StringLength(255)]
     public string? Descripcion { get; set; }
 
-    [StringLength(50)]
-    public string? Estado { get; set; }
+    public bool Estado { get; set; }
 
     [InverseProperty("EditoraNavigation")]
     public virtual ICollection<Libro> Libros { get; set; } = new List<Libro>();

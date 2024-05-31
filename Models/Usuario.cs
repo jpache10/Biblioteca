@@ -23,9 +23,7 @@ public partial class Usuario
 
     [StringLength(50)]
     public string? TipoPersona { get; set; }
-
-    [StringLength(50)]
-    public string? Estado { get; set; }
+    public bool Estado { get; set; }
 
     [InverseProperty("UsuarioNavigation")]
     public virtual ICollection<PrestamoDevolucion> PrestamoDevolucions { get; set; } = new List<PrestamoDevolucion>();
