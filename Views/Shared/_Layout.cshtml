@@ -16,7 +16,7 @@
 <body>
     <div class="container-fluid p-0">
         <div class="row flex-nowrap">
-            <header class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">'
+            <header class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                 <nav class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     @* <nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-toggleable-sm box-shadow
                     flex-md-column align-items-start container" style="height: 100%;"> *@
@@ -38,46 +38,47 @@
                         <li class="nav-item">
                             <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Libros"
                                 asp-action="Index">
-                                <i class="fa-regular fa-circle-user"></i><span
-                                    class="ms-1 d-none d-sm-inline">Libros</span>
+                                <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                                <span class="ms-1 d-none d-sm-inline">Libros</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Usuarios"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i><span
-                                    class="ms-1 d-none d-sm-inline">Usuarios</span></a>
+                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
+                                <span class="ms-1 d-none d-sm-inline">Usuarios</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Idiomas"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i><span
-                                    class="ms-1 d-none d-sm-inline">Idiomas</span></a>
+                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
+                                <span class="ms-1 d-none d-sm-inline">Idiomas</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Autores"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i><span
-                                    class="ms-1 d-none d-sm-inline">Autores</span></a>
+                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
+                                <span class="ms-1 d-none d-sm-inline">Autores</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="TiposBibliografia"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i><span
-                                    class="ms-1 d-none d-sm-inline">Bibliografía</span></a>
+                            <a class="nav-link align-middle text-white px-0" asp-area=""
+                                asp-controller="TiposBibliografia" asp-action="Index"><i
+                                    class="fa-regular fa-circle-user"></i>
+                                <span class="ms-1 d-none d-sm-inline">Bibliografía</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Ciencias"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i><span
-                                    class="ms-1 d-none d-sm-inline">Ciencias</span></a>
+                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
+                                <span class="ms-1 d-none d-sm-inline">Ciencias</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Editoras"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i><span
-                                    class="ms-1 d-none d-sm-inline">Editoras</span></a>
+                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
+                                <span class="ms-1 d-none d-sm-inline">Editoras</span></a>
                         </li>
                     </ul>
                 </nav>
             </header>
 
-            <div class="col-xs-12 col-md-10">
-                <main role="main" class="container content" class="pb-3">
+            <div class="col-xs-12 col-md-10 main-background">
+                <main role="main" class="container">
                     @RenderBody()
                 </main>
             </div>

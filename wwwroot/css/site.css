@@ -17,6 +17,10 @@ html {
   min-height: 100%;
 }
 
+.main-background {
+  background-color: #F5F5F5;
+}
+
 body {
   /* margin-bottom: 60px; */
 }
