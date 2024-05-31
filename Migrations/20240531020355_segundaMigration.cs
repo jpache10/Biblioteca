@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Biblioteca.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class segundaMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,11 +15,12 @@ namespace Biblioteca.Migrations
                 name: "Autores",
                 columns: table => new
                 {
-                    Identificador = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identificador = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     PaisOrigen = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     IdiomaNativo = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -30,9 +31,10 @@ namespace Biblioteca.Migrations
                 name: "Ciencias",
                 columns: table => new
                 {
-                    Identificador = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identificador = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -43,9 +45,10 @@ namespace Biblioteca.Migrations
                 name: "Editoras",
                 columns: table => new
                 {
-                    Identificador = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identificador = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -56,13 +59,14 @@ namespace Biblioteca.Migrations
                 name: "Empleados",
                 columns: table => new
                 {
-                    Identificador = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identificador = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     Cedula = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
                     TandaLabor = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     PorcientoComision = table.Column<decimal>(type: "decimal(5, 2)", nullable: true),
-                    FechaIngreso = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    FechaIngreso = table.Column<DateOnly>(type: "TEXT", nullable: true, defaultValueSql: "GETDATE()"),
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -73,9 +77,10 @@ namespace Biblioteca.Migrations
                 name: "Idiomas",
                 columns: table => new
                 {
-                    Identificador = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identificador = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -86,9 +91,10 @@ namespace Biblioteca.Migrations
                 name: "TiposBibliografia",
                 columns: table => new
                 {
-                    Identificador = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identificador = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -99,12 +105,13 @@ namespace Biblioteca.Migrations
                 name: "Usuarios",
                 columns: table => new
                 {
-                    Identificador = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identificador = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     Cedula = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
                     NoCarnet = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
                     TipoPersona = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -115,7 +122,8 @@ namespace Biblioteca.Migrations
                 name: "Libros",
                 columns: table => new
                 {
-                    Identificador = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identificador = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
                     SignaturaTopografica = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     ISBN = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
@@ -125,7 +133,7 @@ namespace Biblioteca.Migrations
                     AnioPublicacion = table.Column<int>(type: "INTEGER", nullable: true),
                     Ciencia = table.Column<int>(type: "INTEGER", nullable: true),
                     Idioma = table.Column<int>(type: "INTEGER", nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -161,7 +169,8 @@ namespace Biblioteca.Migrations
                 name: "PrestamoDevolucion",
                 columns: table => new
                 {
-                    NoPrestamo = table.Column<int>(type: "INTEGER", nullable: false),
+                    NoPrestamo = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Empleado = table.Column<int>(type: "INTEGER", nullable: true),
                     Libro = table.Column<int>(type: "INTEGER", nullable: true),
                     Usuario = table.Column<int>(type: "INTEGER", nullable: true),
@@ -170,7 +179,7 @@ namespace Biblioteca.Migrations
                     MontoXDia = table.Column<decimal>(type: "decimal(10, 2)", nullable: true),
                     CantidadDias = table.Column<int>(type: "INTEGER", nullable: true),
                     Comentario = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
+                    Estado = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {

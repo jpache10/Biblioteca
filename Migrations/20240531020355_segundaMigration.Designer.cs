@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biblioteca.Migrations
 {
     [DbContext(typeof(SqlDatabaseBibliotecaContext))]
-    [Migration("20240530020032_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240531020355_segundaMigration")]
+    partial class segundaMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,11 +23,13 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.Autore", b =>
                 {
                     b.Property<int>("Identificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("IdiomaNativo")
                         .HasMaxLength(100)
@@ -50,15 +52,17 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.Ciencia", b =>
                 {
                     b.Property<int>("Identificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Identificador")
                         .HasName("PK__Ciencias__F2374EB127E7D75D");
@@ -69,15 +73,17 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.Editora", b =>
                 {
                     b.Property<int>("Identificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Identificador")
                         .HasName("PK__Editoras__F2374EB170C37B1E");
@@ -88,18 +94,22 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.Empleado", b =>
                 {
                     b.Property<int>("Identificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Cedula")
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<DateOnly?>("FechaIngreso")
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
@@ -121,15 +131,17 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.Idioma", b =>
                 {
                     b.Property<int>("Identificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Identificador")
                         .HasName("PK__Idiomas__F2374EB1BFCBD7E5");
@@ -140,6 +152,7 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.Libro", b =>
                 {
                     b.Property<int>("Identificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("AnioPublicacion")
@@ -158,9 +171,10 @@ namespace Biblioteca.Migrations
                     b.Property<int?>("Editora")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<int?>("Idioma")
                         .HasColumnType("INTEGER");
@@ -196,6 +210,7 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.PrestamoDevolucion", b =>
                 {
                     b.Property<int>("NoPrestamo")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("CantidadDias")
@@ -208,9 +223,10 @@ namespace Biblioteca.Migrations
                     b.Property<int?>("Empleado")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<DateOnly?>("FechaDevolucion")
                         .HasColumnType("TEXT");
@@ -243,15 +259,17 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.TiposBibliografium", b =>
                 {
                     b.Property<int>("Identificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Identificador")
                         .HasName("PK__TiposBib__F2374EB192DD4C49");
@@ -262,15 +280,17 @@ namespace Biblioteca.Migrations
             modelBuilder.Entity("Biblioteca.Models.Usuario", b =>
                 {
                     b.Property<int>("Identificador")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Cedula")
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Estado")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("NoCarnet")
                         .HasMaxLength(20)
