@@ -75,6 +75,7 @@ namespace Biblioteca.Controllers
         {
             if (ModelState.IsValid)
             {
+                tiposBibliografium.Estado = true;
                 _context.Add(tiposBibliografium);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
