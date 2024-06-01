@@ -1,0 +1,11 @@
+@model Biblioteca.Models.TiposBibliografium
+
+@{
+    ViewData["Title"] = "Crear Tipo de Bibliografia";
+}
+
+<h1 class="title_main">Nuevo Tipo de Bibliografía</h1>
+
+<div class="mt-4">
+    @await Html.PartialAsync("_CreateForm", Model)
+</div>

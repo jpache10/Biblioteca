@@ -19,9 +19,27 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Editoras
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            return View(await _context.Editoras.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var editoras = _context.Editoras.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                editoras = editoras.Where(l =>
+                    l.Descripcion.ToLower().Contains(searchString.ToLower())
+                );
+            }
+
+            var bibliografias = PaginatedList<Editora>.Create(editoras, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(bibliografias);
+
         }
 
         // GET: Editoras/Details/5
