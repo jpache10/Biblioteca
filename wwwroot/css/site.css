@@ -12,6 +12,16 @@ html {
   width: 3rem;
 }
 
+.nav-link.active {
+  background-color: #215810;
+  color: #fff;
+}
+
+.nav-item.active {
+  border-right: 4px solid #007bff; 
+  background-color: #212121;
+}
+
 .green-circle {
   background-color: green;
   width: 10px;
