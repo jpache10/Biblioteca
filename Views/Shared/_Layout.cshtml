@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Biblioteca</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Biblioteca.styles.css" asp-append-version="true" />
 </head>
@@ -17,62 +14,78 @@
     <div class="container-fluid p-0">
         <div class="row flex-nowrap">
             <header class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                <nav class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    @* <nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-toggleable-sm box-shadow
-                    flex-md-column align-items-start container" style="height: 100%;"> *@
-                    @* <div class="mb-2 p-4"> *@
-                    <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-                        asp-area="" asp-controller="Home" asp-action="Index"><span
-                            class="fs-5 d-none d-sm-inline">Biblioteca</span></a>
-                    @* </div> *@
-
+                <nav class="d-flex flex-column gap-0 column-gap-3 align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 ms-2">
+                    <a class="d-flex align-items-center py-4 ms-1 mb-md-0 me-md-auto text-white text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">
+                        <span class="fs-5 fw-bolder">Biblioteca</span>
+                    </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto ms-2 mb-0 align-items-center align-items-sm-start"
                         id="menu">
-                        <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Home"
-                                asp-action="Index">
-                                <i class="fa fa-home" aria-hidden="true"></i>
-                                <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                        <li class="nav-item py-2">
+                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Home" asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_dashboard.svg" alt="Icono dashboard" />
+                                    <span class="text-start">Dashboard</span>
+                                </div>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Libros"
-                                asp-action="Index">
-                                <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                        <li class="nav-item py-2">
+                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Home" asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_bibliografia.svg" alt="Icono bibliografia" />
+                                    <span class="text-start">Bibliografía</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2">
+                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Editoras" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_editoras.svg" alt="Icono editoras" />
+                                <span class="ms-1 d-none d-sm-inline">Editoras</span>
+                                </div>
+                            </a>
+                        </li>                        
+                        <li class="nav-item py-2">
+                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Ciencias" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_ciencias.svg" alt="Icono ciencias" />
+                                <span class="ms-1 d-none d-sm-inline">Ciencias</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2">
+                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Idiomas" asp-action="Index">
+                                  <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_Idiomas.svg" alt="Icono idioma" />
+                                <span class="ms-1 d-none d-sm-inline">Idiomas</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2">
+                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Autores" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_autores.svg" alt="Icono autores" />
+                                <span class="ms-1 d-none d-sm-inline">Autores</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2">
+                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Usuarios" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_usuarios.svg" alt="Icono usuarios" />
+                                <span class="ms-1 d-none d-sm-inline">Usuarios</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2">
+                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Libros" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_libros.svg" alt="Icono libros" />
                                 <span class="ms-1 d-none d-sm-inline">Libros</span>
+                                </div>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Usuarios"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
-                                <span class="ms-1 d-none d-sm-inline">Usuarios</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Idiomas"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
-                                <span class="ms-1 d-none d-sm-inline">Idiomas</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Autores"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
-                                <span class="ms-1 d-none d-sm-inline">Autores</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area=""
-                                asp-controller="TiposBibliografium" asp-action="Index"><i
-                                    class="fa-regular fa-circle-user"></i>
-                                <span class="ms-1 d-none d-sm-inline">Bibliografía</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Ciencias"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
-                                <span class="ms-1 d-none d-sm-inline">Ciencias</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link align-middle text-white px-0" asp-area="" asp-controller="Editoras"
-                                asp-action="Index"><i class="fa-regular fa-circle-user"></i>
-                                <span class="ms-1 d-none d-sm-inline">Editoras</span></a>
-                        </li>
+
+                        
                     </ul>
                 </nav>
             </header>
@@ -89,12 +102,6 @@
         </div>
     </div>
 
-
-    @* <footer class="border-top footer text-muted">
-    <div class="container">
-    &copy; 2024 - Biblioteca - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -8,6 +8,10 @@ html {
   }
 }
 
+.iconos-width {
+  width: 3rem;
+}
+
 .green-circle {
   background-color: green;
   width: 10px;
