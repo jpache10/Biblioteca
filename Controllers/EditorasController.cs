@@ -34,11 +34,11 @@ namespace Biblioteca.Controllers
                 );
             }
 
-            var bibliografias = PaginatedList<Editora>.Create(editoras, currentPage, pageSize);
+            var editoras_view = PaginatedList<Editora>.Create(editoras, currentPage, pageSize);
 
             ViewData["CurrentFilter"] = searchString;
 
-            return View(bibliografias);
+            return View(editoras_view);
 
         }
 
