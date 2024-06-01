@@ -30,7 +30,7 @@ namespace Biblioteca.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 tiposBibliografia = tiposBibliografia.Where(l =>
-                    l.Descripcion.Contains(searchString)
+                    l.Descripcion.ToLower().Contains(searchString.ToLower())
                 );
             }
 

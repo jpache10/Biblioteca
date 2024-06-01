@@ -8,6 +8,24 @@ html {
   }
 }
 
+.green-circle {
+  background-color: green;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.red-circle {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
 .btn:focus,
 .btn:active:focus,
 .btn-link.nav-link:focus,
