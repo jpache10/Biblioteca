@@ -12,6 +12,7 @@ public partial class TiposBibliografium
     public int Identificador { get; set; }
 
     [Required(ErrorMessage = "Este campo es requerido")]
+    [Display(Name = "Descripción", Prompt = "Ingrese la descripción")]
     [StringLength(255)]
     public required string Descripcion { get; set; }
 

@@ -12,6 +12,7 @@ public partial class Editora
     public int Identificador { get; set; }
 
     [Required(ErrorMessage = "Este mensaje es obligatorio")]
+     [Display(Name = "Descripción", Prompt = "Ingrese la descripción")]
     [StringLength(255)]
     public required string Descripcion { get; set; }
 
