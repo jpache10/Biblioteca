@@ -12,6 +12,10 @@ html {
   width: 3rem;
 }
 
+.iconos-sm {
+  width: .9rem;
+}
+
 .nav-link.active {
   background-color: #215810;
   color: #fff;

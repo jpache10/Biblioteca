@@ -21,8 +21,9 @@
 <div class="mt-4">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a class="btn btn-outline-primary bg-white text-primary text-uppercase fst-italic" asp-action="Create"> 
-            <i class="fa-solid fa-plus"></i> Nueva bibliografía
+        <a class="btn btn-outline-primary bg-white text-primary text-uppercase fst-italic" asp-action="Create">
+            <img class="iconos-sm" src="/images/icon_plus.svg" alt="Icono plus" /> 
+            <span class="p-1">Nueva bibliografía</span>
         </a>
         <form asp-action="Index" class="d-flex" method="get">
             <input type="search" name="searchString" class="form-control rounded" placeholder="⌕ Search..."
@@ -52,20 +53,20 @@
                             <span class="@(item.Estado ? "green-circle" : "red-circle")"></span>
                             @(item.Estado ? "Activo" : "Inactivo")
                         <td>
-                                @* <div class="btn-group"> *@
+
                             <a asp-action="Details" asp-route-id="@item.Identificador"
                                 class="btn border border-dark btn-light px-2">
-                                <i class="fa-regular fa-eye"></i>
+                                <img class="iconos-sm" src="/images/icon_details.svg" alt="Icono details" />
                             </a>
                             <a asp-action="Edit" asp-route-id="@item.Identificador"
                                 class="btn border border-dark btn-light px-2">
-                                <i class="fa fa-pencil"></i>
+                                   <img class="iconos-sm" src="/images/icon_edit.svg" alt="Icono edit" />
                             </a>
                             <a asp-action="Delete" asp-route-id="@item.Identificador"
                                 class="btn border border-dark btn-light px-2">
-                                <i class="fa-regular fa-trash-can"></i>
+                                <img class="iconos-sm" src="/images/icon_delete.svg" alt="Icono delete" />
                             </a>
-                                @* </div> *@
+
                         </td>
                     </tr>
                 }
