@@ -6,7 +6,7 @@
     var columns = new List<ColumnConfig<Biblioteca.Models.TiposBibliografium>>
     {
         new ColumnConfig<Biblioteca.Models.TiposBibliografium> { Header = "#", ValueSelector = item => item.Identificador, CssClass = "text-center" },
-        new ColumnConfig<Biblioteca.Models.TiposBibliografium> { Header = "Descripcion", ValueSelector = item => item.Descripcion },
+        new ColumnConfig<Biblioteca.Models.TiposBibliografium> { Header = "Descripción", ValueSelector = item => item.Descripcion },
         new ColumnConfig<Biblioteca.Models.TiposBibliografium> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Activo" : "Inactivo")}"}
     };
 }
