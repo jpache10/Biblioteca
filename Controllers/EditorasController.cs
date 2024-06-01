@@ -75,6 +75,7 @@ namespace Biblioteca.Controllers
         {
             if (ModelState.IsValid)
             {
+                editora.Estado = true;
                 _context.Add(editora);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

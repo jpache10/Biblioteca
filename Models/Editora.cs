@@ -11,8 +11,9 @@ public partial class Editora
     [Key]
     public int Identificador { get; set; }
 
+    [Required(ErrorMessage = "Este mensaje es obligatorio")]
     [StringLength(255)]
-    public string? Descripcion { get; set; }
+    public required string Descripcion { get; set; }
 
     public bool Estado { get; set; }
 
