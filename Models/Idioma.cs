@@ -11,11 +11,12 @@ public partial class Idioma
     [Key]
     public int Identificador { get; set; }
 
+    [Required(ErrorMessage = "Este mensaje es obligatorio")]
+    [Display(Name = "Descripción", Prompt = "Ingrese el descripción")]
     [StringLength(255)]
-    public string? Descripcion { get; set; }
+    public required string Descripcion { get; set; }
 
-    [StringLength(50)]
-    public string? Estado { get; set; }
+    public bool Estado { get; set; }
 
     [InverseProperty("IdiomaNavigation")]
     public virtual ICollection<Libro> Libros { get; set; } = new List<Libro>();

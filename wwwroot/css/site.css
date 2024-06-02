@@ -8,7 +8,47 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.iconos-width {
+  width: 3rem;
+}
+
+.iconos-sm {
+  width: .9rem;
+}
+
+.nav-link.active {
+  background-color: #215810;
+  color: #fff;
+}
+
+.nav-item.active {
+  border-right: 4px solid #007bff; 
+  background-color: #212121;
+}
+
+.green-circle {
+  background-color: green;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.red-circle {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -17,6 +57,18 @@ html {
   min-height: 100%;
 }
 
+.main-background {
+  background-color: #F5F5F5;
+}
+
+.title_main {
+  font-style: italic;
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 72px;
+  text-align: left;
+}
+
 body {
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
 }

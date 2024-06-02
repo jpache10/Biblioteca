@@ -30,8 +30,7 @@ public partial class PrestamoDevolucion
     [StringLength(255)]
     public string? Comentario { get; set; }
 
-    [StringLength(50)]
-    public string? Estado { get; set; }
+    public bool Estado { get; set; }
 
     [ForeignKey("Empleado")]
     [InverseProperty("PrestamoDevolucions")]

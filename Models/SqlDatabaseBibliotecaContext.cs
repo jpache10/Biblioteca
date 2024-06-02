@@ -33,8 +33,12 @@ public partial class SqlDatabaseBibliotecaContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:Biblioteca");
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+    //     optionsBuilder.UseSqlite(Configuration.GetConnectionString("WebApiDatabase"));
+    // }
+    // =>  optionsBuilder.UseSqlite("Name=ConnectionStrings:WebApiDatabase");
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,42 +46,56 @@ public partial class SqlDatabaseBibliotecaContext : DbContext
         {
             entity.HasKey(e => e.Identificador).HasName("PK__Autores__F2374EB187A61A20");
 
-            entity.Property(e => e.Identificador).ValueGeneratedNever();
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Ciencia>(entity =>
         {
             entity.HasKey(e => e.Identificador).HasName("PK__Ciencias__F2374EB127E7D75D");
 
-            entity.Property(e => e.Identificador).ValueGeneratedNever();
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Editora>(entity =>
         {
             entity.HasKey(e => e.Identificador).HasName("PK__Editoras__F2374EB170C37B1E");
 
-            entity.Property(e => e.Identificador).ValueGeneratedNever();
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Empleado>(entity =>
         {
             entity.HasKey(e => e.Identificador).HasName("PK__Empleado__F2374EB1C058497D");
 
-            entity.Property(e => e.Identificador).ValueGeneratedNever();
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
+
+            entity.Property(e => e.FechaIngreso).HasDefaultValueSql("GETDATE()");
         });
 
         modelBuilder.Entity<Idioma>(entity =>
         {
             entity.HasKey(e => e.Identificador).HasName("PK__Idiomas__F2374EB1BFCBD7E5");
 
-            entity.Property(e => e.Identificador).ValueGeneratedNever();
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Libro>(entity =>
         {
             entity.HasKey(e => e.Identificador).HasName("PK__Libros__F2374EB1201BE782");
 
-            entity.Property(e => e.Identificador).ValueGeneratedNever();
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
 
             entity.HasOne(d => d.AutoresNavigation).WithMany(p => p.Libros).HasConstraintName("FK__Libros__Autores__6754599E");
 
@@ -94,7 +112,9 @@ public partial class SqlDatabaseBibliotecaContext : DbContext
         {
             entity.HasKey(e => e.NoPrestamo).HasName("PK__Prestamo__E21CCFF3472922B1");
 
-            entity.Property(e => e.NoPrestamo).ValueGeneratedNever();
+            entity.Property(e => e.NoPrestamo).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
 
             entity.HasOne(d => d.EmpleadoNavigation).WithMany(p => p.PrestamoDevolucions).HasConstraintName("FK__PrestamoD__Emple__70DDC3D8");
 
@@ -107,14 +127,18 @@ public partial class SqlDatabaseBibliotecaContext : DbContext
         {
             entity.HasKey(e => e.Identificador).HasName("PK__TiposBib__F2374EB192DD4C49");
 
-            entity.Property(e => e.Identificador).ValueGeneratedNever();
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Identificador).HasName("PK__Usuarios__F2374EB14AAEC3E4");
 
-            entity.Property(e => e.Identificador).ValueGeneratedNever();
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
         });
 
         OnModelCreatingPartial(modelBuilder);

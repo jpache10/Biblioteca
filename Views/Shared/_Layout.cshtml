@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,45 +9,102 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Biblioteca.styles.css" asp-append-version="true" />
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Biblioteca</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <div class="container-fluid p-0">
+        <div class="row flex-nowrap">
+            <header class="col-auto col-md-3 col-xl-2 px-0 bg-dark">
+                <nav class="d-flex flex-column align-items-center align-items-sm-start pt-2 text-white min-vh-100 ms-2">
+                    <a class="d-flex align-items-center py-4 ms-1 mb-md-0 me-md-auto text-white text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">
+                        <span class="fs-5 fw-bolder ps-3">Biblioteca</span>
+                    </a>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 w-100" id="menu">
+                        <li class="nav-item my-2 @Html.IsActive("Home", "Index")">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Home" asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_dashboard.svg" alt="Icono dashboard" />
+                                    <span class="text-start">Dashboard</span>
+                                </div>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item my-2 @Html.IsActive("TiposBibliografium", "Index")">
+                            <a class="nav-link ps-3 align-middle text-white px-0 "  asp-area="" asp-controller="TiposBibliografium" asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_bibliografia.svg" alt="Icono bibliografia" />
+                                    <span class="text-start">Bibliografía</span>
+                                </div>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Autores" asp-action="Index">Autores</a>
+                        <li class="nav-item my-2 @Html.IsActive("Editoras", "Index")">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Editoras" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_editoras.svg" alt="Icono editoras" />
+                                <span class="ms-1 d-none d-sm-inline">Editoras</span>
+                                </div>
+                            </a>
+                        </li>                        
+                        <li class="nav-item my-2 @Html.IsActive("Ciencias", "Index")">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Ciencias" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_ciencias.svg" alt="Icono ciencias" />
+                                <span class="ms-1 d-none d-sm-inline">Ciencias</span>
+                                </div>
+                            </a>
                         </li>
+                        <li class="nav-item my-2 @Html.IsActive("Idiomas", "Index")">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Idiomas" asp-action="Index">
+                                  <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_Idiomas.svg" alt="Icono idioma" />
+                                <span class="ms-1 d-none d-sm-inline">Idiomas</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item my-2 @Html.IsActive("Autores", "Index")">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Autores" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_autores.svg" alt="Icono autores" />
+                                <span class="ms-1 d-none d-sm-inline">Autores</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item my-2 @Html.IsActive("Usuarios", "Index")">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Usuarios" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_usuarios.svg" alt="Icono usuarios" />
+                                <span class="ms-1 d-none d-sm-inline">Usuarios</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item my-2 @Html.IsActive("Libros", "Index")">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Libros" asp-action="Index">
+                                 <div class="row row-cols-2 align-items-center">
+                                    <img class="iconos-width" src="/images/icon_libros.svg" alt="Icono libros" />
+                                <span class="ms-1 d-none d-sm-inline">Libros</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        
                     </ul>
-                </div>
+                </nav>
+            </header>
+
+            <div class="col-xs-12 col-md-10 main-background">
+                <main role="main" class="container">
+                    <div class="pt-4 px-3">
+                        @RenderBody()
+                    </div>
+                    
+                </main>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Biblioteca - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

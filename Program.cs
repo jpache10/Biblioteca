@@ -5,10 +5,14 @@ using Biblioteca.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<SqlDatabaseBibliotecaContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Biblioteca") ?? throw new InvalidOperationException("Connection string 'sDatabaseContext' not found.")));
-builder.Services.AddControllersWithViews();
+// builder.Services.AddDbContext<SqlDatabaseBibliotecaContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("Biblioteca") ?? throw new InvalidOperationException("Connection string 'sDatabaseContext' not found.")));
 
+var connectionString = builder.Configuration.GetConnectionString("WebApiDatabase") ?? "Data Source=BibliotecaDatabase.db";
+builder.Services.AddSqlite<SqlDatabaseBibliotecaContext>(connectionString);
+
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 

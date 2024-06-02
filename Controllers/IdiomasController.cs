@@ -19,9 +19,27 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Idiomas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            return View(await _context.Idiomas.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var idiomas = _context.Idiomas.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                idiomas = idiomas.Where(l =>
+                    l.Descripcion.ToLower().Contains(searchString.ToLower())
+                );
+            }
+
+            var idiomas_view = PaginatedList<Idioma>.Create(idiomas, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(idiomas_view);
+
         }
 
         // GET: Idiomas/Details/5
@@ -57,6 +75,7 @@ namespace Biblioteca.Controllers
         {
             if (ModelState.IsValid)
             {
+                idioma.Estado = true;
                 _context.Add(idioma);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

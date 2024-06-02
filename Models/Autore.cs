@@ -20,8 +20,7 @@ public partial class Autore
     [StringLength(100)]
     public string? IdiomaNativo { get; set; }
 
-    [StringLength(50)]
-    public string? Estado { get; set; }
+public bool Estado { get; set; }
 
     [InverseProperty("AutoresNavigation")]
     public virtual ICollection<Libro> Libros { get; set; } = new List<Libro>();

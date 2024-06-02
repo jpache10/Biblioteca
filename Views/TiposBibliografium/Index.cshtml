@@ -1,0 +1,17 @@
+@model PaginatedList<Biblioteca.Models.TiposBibliografium>
+
+@{
+    ViewData["Title"] = "Tipos de Bibliografías";
+
+    var columns = new List<ColumnConfig<Biblioteca.Models.TiposBibliografium>>
+    {
+        new ColumnConfig<Biblioteca.Models.TiposBibliografium> { Header = "#", ValueSelector = item => item.Identificador, CssClass = "text-center" },
+        new ColumnConfig<Biblioteca.Models.TiposBibliografium> { Header = "Descripción", ValueSelector = item => item.Descripcion },
+        new ColumnConfig<Biblioteca.Models.TiposBibliografium> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Activo" : "Inactivo")}"}
+    };
+}
+
+@await Html.PartialAsync("_IndexHeader", ViewData["Title"].ToString())
+@await Html.PartialAsync("TableElementBibliografia", Tuple.Create(Model, columns))
+
+

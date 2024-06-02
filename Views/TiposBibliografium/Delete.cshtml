@@ -1,0 +1,48 @@
+@model Biblioteca.Models.TiposBibliografium
+
+@{
+    ViewData["Title"] = "Eliminar Tipo de Bibliografia";
+}
+
+<h1 class="title_main">Eliminar Tipo de Bibliografía</h1>
+
+<div class="mt-4">
+    <h3>Detalle</h3>
+    <hr />
+    <div class="bg-white rounded gy-2 me-auto w-50">
+        <table class="table fs-5">
+            <thead>
+                <tr>
+                    <th scope="col">Campo</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Descripcion)</td>
+                    <td>@Html.DisplayFor(model => model.Descripcion)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Estado)</td>
+                    <td>
+                        <span class="@(Model.Estado ? "green-circle" : "red-circle")"></span>
+                        @(Model.Estado ? "Activo" : "Inactivo")
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Identificador" />
+        <div class="row row-cols-2 justify-content-start form-group mt-5">
+            <div class="col-1">
+                <button class="btn btn-danger" type="submit">Eliminar</button>
+            </div>
+            <div class="col-1">
+                <a class="btn btn-light bg-white text-dark border border-dark" asp-action="Index">Cancelar</a>
+            </div>
+
+        </div>
+    </form>
+</div>

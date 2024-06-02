@@ -33,8 +33,7 @@ public partial class Libro
 
     public int? Idioma { get; set; }
 
-    [StringLength(50)]
-    public string? Estado { get; set; }
+    public bool Estado { get; set; }
 
     [ForeignKey("Autores")]
     [InverseProperty("Libros")]

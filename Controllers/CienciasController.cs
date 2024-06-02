@@ -18,10 +18,28 @@ namespace Biblioteca.Controllers
             _context = context;
         }
 
-        // GET: Ciencias
-        public async Task<IActionResult> Index()
+       // GET: Ciencias
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            return View(await _context.Ciencias.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var ciencias = _context.Ciencias.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                ciencias = ciencias.Where(l =>
+                    l.Descripcion.ToLower().Contains(searchString.ToLower())
+                );
+            }
+
+            var ciencias_view = PaginatedList<Ciencia>.Create(ciencias, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(ciencias_view);
+
         }
 
         // GET: Ciencias/Details/5
@@ -57,6 +75,7 @@ namespace Biblioteca.Controllers
         {
             if (ModelState.IsValid)
             {
+                ciencia.Estado = true;
                 _context.Add(ciencia);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
