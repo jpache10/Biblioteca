@@ -19,9 +19,31 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Empleados
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            return View(await _context.Empleados.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var empleados = _context.Empleados.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                empleados = empleados.Where(l =>
+                    l.Nombre.ToLower().Contains(searchString.ToLower()) ||
+                    l.Cedula.ToLower().Contains(searchString.ToLower()) ||
+                    l.TandaLabor.ToLower().Contains(searchString.ToLower()) ||
+                    l.PorcientoComision.ToString().ToLower().Contains(searchString.ToLower()) ||
+                    (l.Estado ? "activo" : "inactivo").Contains(searchString.ToLower())
+                );
+            }
+
+            var empleados_view = PaginatedList<Empleado>.Create(empleados, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(empleados_view);
+
         }
 
         // GET: Empleados/Details/5
@@ -45,6 +67,7 @@ namespace Biblioteca.Controllers
         // GET: Empleados/Create
         public IActionResult Create()
         {
+            ViewBag.TandaLaboral = new SelectList(new List<string> () {"Turno de mañana","Turno de tarde", "Turno de noche"});
             return View();
         }
 
@@ -61,6 +84,8 @@ namespace Biblioteca.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.TandaLaboral = new SelectList(new List<string> () {"Turno de mañana","Turno de tarde", "Turno de noche"});
             return View(empleado);
         }
 

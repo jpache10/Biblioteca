@@ -11,18 +11,18 @@ public partial class Autore
     [Key]
     public int Identificador { get; set; }
 
-    [StringLength(100)]
-    [Required(ErrorMessage = "Este campo es obligatorio")]
+    [StringLength(100, ErrorMessage = "El número máximo de caracteres es {1}")]
+    [Required(ErrorMessage = "El campo {0} es obligatorio")]
     [Display(Name = "Nombre", Prompt = "Ingrese el Nombre")]
     public string? Nombre { get; set; }
 
-    [StringLength(100)]
-    [Required(ErrorMessage = "Este campo es obligatorio")]
+    [StringLength(100, ErrorMessage = "El número máximo de caracteres es {1}")]
+    [Required(ErrorMessage = "El campo {0} es obligatorio")]
     [Display(Name = "País", Prompt = "Ingrese el País")]
     public string? PaisOrigen { get; set; }
 
-    [StringLength(100)]
-    [Required(ErrorMessage = "Este campo es obligatorio")]
+    [StringLength(100, ErrorMessage = "El número máximo de caracteres es {1}")]
+    [Required(ErrorMessage = "El campo {0} es obligatorio")]
     [Display(Name = "Idioma nativo", Prompt = "Ingrese el idioma nativo")]
     public string? IdiomaNativo { get; set; }
 
