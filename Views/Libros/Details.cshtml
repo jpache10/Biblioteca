@@ -1,78 +1,73 @@
 @model Biblioteca.Models.Libro
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Libro";
 }
 
-<h1>Details</h1>
+<h1 class="title_main">Detalles Libro</h1>
 
-<div>
-    <h4>Libro</h4>
+<div class="mt-4">
+    <h3>Detalle</h3>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SignaturaTopografica)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SignaturaTopografica)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Isbn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Isbn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnioPublicacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnioPublicacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AutoresNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AutoresNavigation.Identificador)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CienciaNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CienciaNavigation.Identificador)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EditoraNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EditoraNavigation.Identificador)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdiomaNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdiomaNavigation.Identificador)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoBibliografiaNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoBibliografiaNavigation.Identificador)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Identificador">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="bg-white rounded gy-2 me-auto w-75">
+        <table class="table fs-5">
+            <thead>
+                <tr>
+                    <th scope="col">Campo</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Descripcion)</td>
+                    <td>@Html.DisplayFor(model => model.Descripcion)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.SignaturaTopografica)</td>
+                    <td>@Html.DisplayFor(model => model.SignaturaTopografica)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Isbn)</td>
+                    <td>@Html.DisplayFor(model => model.Isbn)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.AutoresNavigation)</td>
+                    <td>@Html.DisplayFor(model => model.AutoresNavigation.Nombre)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.TipoBibliografiaNavigation)</td>
+                    <td>@Html.DisplayFor(model => model.TipoBibliografiaNavigation.Descripcion)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.EditoraNavigation)</td>
+                    <td>@Html.DisplayFor(model => model.EditoraNavigation.Descripcion)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.IdiomaNavigation)</td>
+                    <td>@Html.DisplayFor(model => model.IdiomaNavigation.Descripcion)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.CienciaNavigation)</td>
+                    <td>@Html.DisplayFor(model => model.CienciaNavigation.Descripcion)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Estado)</td>
+                    <td>
+                        <span class="@(Model.Estado ? "green-circle" : "red-circle")"></span>
+                        @(Model.Estado ? "Activo" : "Inactivo")
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row row-cols-2 justify-content-start form-group mt-5">
+        <div class="col-1">
+            <a asp-action="Edit" asp-route-id="@Model?.Identificador" class="btn btn-primary">Editar</a>
+        </div>
+        <div class="col-1">
+            <a class="btn btn-light bg-white text-dark border border-dark" asp-action="Index">Regresar</a>
+        </div>
+
+    </div>
 </div>

@@ -52,18 +52,22 @@ public partial class Libro
     public bool Estado { get; set; }
 
     [ForeignKey("Autores")]
+    [Display(Name = "Autor")]
     [InverseProperty("Libros")]
     public virtual Autore? AutoresNavigation { get; set; }
 
     [ForeignKey("Ciencia")]
+    [Display(Name = "Ciencia")]
     [InverseProperty("Libros")]
     public virtual Ciencia? CienciaNavigation { get; set; }
 
     [ForeignKey("Editora")]
+    [Display(Name = "Editora")]
     [InverseProperty("Libros")]
     public virtual Editora? EditoraNavigation { get; set; }
 
     [ForeignKey("Idioma")]
+    [Display(Name = "Idioma")]
     [InverseProperty("Libros")]
     public virtual Idioma? IdiomaNavigation { get; set; }
 
