@@ -1,59 +1,18 @@
-@model IEnumerable<Biblioteca.Models.Usuario>
+@model PaginatedList<Biblioteca.Models.Usuario>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Usuarios";
+
+    var columns = new List<ColumnConfig<Biblioteca.Models.Usuario>>
+    {
+        new ColumnConfig<Biblioteca.Models.Usuario> { Header = "#", ValueSelector = item => item.Identificador, CssClass = "text-center" },
+        new ColumnConfig<Biblioteca.Models.Usuario> { Header = "Nombre", ValueSelector = item => item.Nombre ?? "Desconocido" },
+        new ColumnConfig<Biblioteca.Models.Usuario> { Header = "Cédula", ValueSelector = item => item.Cedula ?? "Desconocido" },
+        new ColumnConfig<Biblioteca.Models.Usuario> { Header = "No. Carnet", ValueSelector = item => item.NoCarnet ?? "Desconocido"},
+        new ColumnConfig<Biblioteca.Models.Usuario> { Header = "Tipo de persona", ValueSelector = item => item.TipoPersona ?? "Desconocido"},
+        new ColumnConfig<Biblioteca.Models.Usuario> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Activo" : "Inactivo")}"}
+    };
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoCarnet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoPersona)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoCarnet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoPersona)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Identificador">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Identificador">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Identificador">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+@await Html.PartialAsync("_IndexHeader", ViewData["Title"].ToString())
+@await Html.PartialAsync("TableElementUsuario", Tuple.Create(Model, columns))

@@ -20,9 +20,31 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Usuarios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            return View(await _context.Usuarios.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var usuarios = _context.Usuarios.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                usuarios = usuarios.Where(l =>
+                    l.Nombre.ToLower().Contains(searchString.ToLower()) ||
+                    l.Cedula.ToLower().Contains(searchString.ToLower()) ||
+                    l.NoCarnet.ToLower().Contains(searchString.ToLower()) ||
+                    l.TipoPersona.ToLower().Contains(searchString.ToLower()) ||
+                    (l.Estado ? "activo" : "inactivo").Contains(searchString.ToLower())
+                );
+            }
+
+            var usuarios_view = PaginatedList<Usuario>.Create(usuarios, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(usuarios_view);
+
         }
 
         // GET: Usuarios/Details/5
@@ -57,16 +79,15 @@ namespace Biblioteca.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Identificador,Nombre,Cedula,NoCarnet,TipoPersona,Estado")] Usuario usuario)
         {
-             usuario.NoCarnet = NoCarnetUser.GenerarCode();
-                Console.WriteLine(NoCarnetUser.GenerarCode());
 
             if (ModelState.IsValid)
             {
-               
-                // _context.Add(usuario);
-                // await _context.SaveChangesAsync();
+                usuario.NoCarnet = NoCarnetUser.GenerarCode();
+                _context.Add(usuario);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(usuario);
         }
 
@@ -83,6 +104,8 @@ namespace Biblioteca.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.TipoUser = new SelectList(new List<string> () {"Física", "Jurídica"});
             return View(usuario);
         }
 
@@ -118,6 +141,8 @@ namespace Biblioteca.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            
+            ViewBag.TipoUser = new SelectList(new List<string> () {"Física", "Jurídica"});
             return View(usuario);
         }
 

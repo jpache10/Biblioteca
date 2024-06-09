@@ -4,7 +4,7 @@ namespace Biblioteca.Utils
     public static partial class NoCarnetUser
     {
 
-        static string GenerarCode()
+        public static string GenerarCode()
         {
             Random rnd = new Random();
             string numeros = "";
