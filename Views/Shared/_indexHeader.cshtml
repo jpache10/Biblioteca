@@ -2,6 +2,22 @@
 
 @{
     ViewData["Title"] = "Index";
+
+    @functions {
+        public string Singularize(string input)
+        {
+            if (input.EndsWith("es"))
+            {
+                return input.Substring(0, input.Length - 2);
+            }
+            else if (input.EndsWith("s"))
+            {
+                return input.Substring(0, input.Length - 1);
+            }
+            return input;
+        }
+    }
+
 }
 
 <h1 class="title_main">@Model</h1>
@@ -21,7 +37,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <a class="btn btn-outline-primary bg-white text-primary text-uppercase fst-italic" asp-action="Create">
             <img class="iconos-sm" src="/images/icon_plus.svg" alt="Icono plus" /> 
-            <span class="p-1">Crear @Model</span>
+            <span class="p-1">Crear @Singularize(Model)</span>
         </a>
         <form asp-action="Index" class="d-flex" method="get">
             <input type="search" name="searchString" class="form-control rounded" placeholder="⌕ Buscar..." aria-label="Search" value="@ViewData["CurrentFilter"]" />

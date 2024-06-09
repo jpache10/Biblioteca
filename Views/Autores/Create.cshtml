@@ -1,53 +1,54 @@
 @model Biblioteca.Models.Autore
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Autor";
 }
 
-<h1>Create</h1>
+<h1 class="title_main">Nuevo Autor</h1>
 
-<h4>Autore</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Identificador" class="control-label"></label>
-                <input asp-for="Identificador" class="form-control" />
-                <span asp-validation-for="Identificador" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PaisOrigen" class="control-label"></label>
-                <input asp-for="PaisOrigen" class="form-control" />
-                <span asp-validation-for="PaisOrigen" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdiomaNativo" class="control-label"></label>
-                <input asp-for="IdiomaNativo" class="form-control" />
-                <span asp-validation-for="IdiomaNativo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<div class="mt-4">
+    <form class="row g-3 needs-validation" asp-action="Create">
+         <input type="hidden" asp-for="Estado" value="true"/>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-7 form-group">
+            <label asp-for="Nombre" class="control-label fw-bold"></label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+        <div class="col-7 form-group">
+            <label asp-for="PaisOrigen" class="control-label fw-bold"></label>
+            <select asp-for="PaisOrigen" class="form-control" asp-items="ViewBag.Paises">
+                <option value="">Seleccione un país</option>
+            </select>
+            <span asp-validation-for="PaisOrigen" class="text-danger"></span>
+        </div>
+        <div class="col-7 form-group">
+            <label asp-for="IdiomaNativo" class="control-label fw-bold"></label>
+            <select asp-for="IdiomaNativo" class="form-control" asp-items="ViewBag.Idiomas">
+                <option value="">Seleccione un idioma</option>
+            </select>
+            <span asp-validation-for="IdiomaNativo" class="text-danger"></span>
+        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+        <div class="row row-cols-3 justify-content-start form-group mt-5">
+            <div class="col-1">
+                <button class="btn btn-success" type="submit">Crear</button>
+            </div>
+            <div class="col-2 d-flex justify-content-center">
+                <button class="btn btn-light bg-white text-dark border border-dark" type="reset">
+                    Borrar Datos
+                </button>
+            </div>
+            <div class="col-1">
+                <a class="btn btn-light bg-white text-dark border border-dark" asp-action="Index">Cancelar</a>
+            </div>
+        </div>
+       
+    </form>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

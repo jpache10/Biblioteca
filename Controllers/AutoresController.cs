@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Models;
+using Biblioteca.Constants;
 
 namespace Biblioteca.Controllers
 {
@@ -19,9 +20,30 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Autores
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            return View(await _context.Autores.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var autores = _context.Autores.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                autores = autores.Where(l =>
+                    l.Nombre.ToLower().Contains(searchString.ToLower()) ||
+                    l.PaisOrigen.ToLower().Contains(searchString.ToLower()) ||
+                    l.IdiomaNativo.ToLower().Contains(searchString.ToLower()) ||
+                    l.Estado.ToString().ToLower().Contains(searchString.ToLower())
+                );
+            }
+
+            var autores_view = PaginatedList<Autore>.Create(autores, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(autores_view);
+
         }
 
         // GET: Autores/Details/5
@@ -32,19 +54,24 @@ namespace Biblioteca.Controllers
                 return NotFound();
             }
 
-            var autore = await _context.Autores
+            var autor = await _context.Autores
                 .FirstOrDefaultAsync(m => m.Identificador == id);
-            if (autore == null)
+            if (autor == null)
             {
                 return NotFound();
             }
 
-            return View(autore);
+            return View(autor);
         }
 
         // GET: Autores/Create
         public IActionResult Create()
         {
+            var paises = ListadoPaises.GetPaises();
+            var idiomas = _context.Idiomas.Where(x => x.Estado == true).Select(x => x.Descripcion).ToList();
+            ViewBag.Paises = new SelectList(paises);
+            ViewBag.Idiomas = new SelectList(idiomas);
+
             return View();
         }
 
@@ -55,13 +82,32 @@ namespace Biblioteca.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Identificador,Nombre,PaisOrigen,IdiomaNativo,Estado")] Autore autore)
         {
+
+            var paises = ListadoPaises.GetPaises();
+            var idiomas = _context.Idiomas.Where(x => x.Estado == true).Select(x => x.Descripcion).ToList();
+
             if (ModelState.IsValid)
             {
+                if (AutorNameExists(autore.Nombre))
+                {
+                    ModelState.AddModelError("Nombre", "Ya existe un autor con este nombre.");
+                    
+                    ViewBag.Paises = new SelectList(paises);
+                    ViewBag.Idiomas = new SelectList(idiomas);
+                    return View(autore);
+                }
+
                 _context.Add(autore);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+          
+            ViewBag.Paises = new SelectList(paises);
+            ViewBag.Idiomas = new SelectList(idiomas);
+
             return View(autore);
+            
         }
 
         // GET: Autores/Edit/5
@@ -77,6 +123,12 @@ namespace Biblioteca.Controllers
             {
                 return NotFound();
             }
+
+            var paises = ListadoPaises.GetPaises();
+            var idiomas = _context.Idiomas.Where(x => x.Estado == true).Select(x => x.Descripcion).ToList();
+            ViewBag.Paises = new SelectList(paises);
+            ViewBag.Idiomas = new SelectList(idiomas);
+
             return View(autore);
         }
 
@@ -92,12 +144,26 @@ namespace Biblioteca.Controllers
                 return NotFound();
             }
 
+            var paises = ListadoPaises.GetPaises();
+            var idiomas = _context.Idiomas.Where(x => x.Estado == true).Select(x => x.Descripcion).ToList();
+
             if (ModelState.IsValid)
             {
                 try
                 {
+
+                    if (AutorNameExists(autore.Nombre))
+                    {
+                        ModelState.AddModelError("Nombre", "Ya existe un autor con este nombre.");
+                        
+                        ViewBag.Paises = new SelectList(paises);
+                        ViewBag.Idiomas = new SelectList(idiomas);
+                        return View(autore);
+                    }
+
                     _context.Update(autore);
                     await _context.SaveChangesAsync();
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -110,8 +176,14 @@ namespace Biblioteca.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+            
+           
+            ViewBag.Paises = new SelectList(paises);
+            ViewBag.Idiomas = new SelectList(idiomas);
+
             return View(autore);
         }
 
@@ -151,6 +223,11 @@ namespace Biblioteca.Controllers
         private bool AutoreExists(int id)
         {
             return _context.Autores.Any(e => e.Identificador == id);
+        }
+
+        private bool AutorNameExists(string name)
+        {
+            return _context.Autores.Any(e => e.Nombre == name);
         }
     }
 }
