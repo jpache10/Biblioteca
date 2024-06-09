@@ -9,8 +9,8 @@
         new ColumnConfig<Biblioteca.Models.Empleado> { Header = "Nombre", ValueSelector = item => item.Nombre ?? "Desconocido" },
         new ColumnConfig<Biblioteca.Models.Empleado> { Header = "Cédula", ValueSelector = item => item.Cedula ?? "Desconocido" },
         new ColumnConfig<Biblioteca.Models.Empleado> { Header = "Tanda", ValueSelector = item => item.TandaLabor ?? "Desconocido"},
-        new ColumnConfig<Biblioteca.Models.Empleado> { Header = "Comisión", ValueSelector = item => item.PorcientoComision},
-        new ColumnConfig<Biblioteca.Models.Empleado> { Header = "Fecha de ingreso", ValueSelector = item => item.FechaIngreso},
+        new ColumnConfig<Biblioteca.Models.Empleado> { Header = "Comisión", ValueSelector = item => item.PorcientoComision.ToPercentage()},
+        new ColumnConfig<Biblioteca.Models.Empleado> { Header = "Fecha de ingreso", ValueSelector = item => item.FechaIngreso.Value.ToString("dd / MM / yyyy")},
         new ColumnConfig<Biblioteca.Models.Empleado> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Activo" : "Inactivo")}"}
     };
 }

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Eliminar Empleado";
+    string fecha = Model.FechaIngreso.HasValue ? Model.FechaIngreso.Value.ToString("dd / MM / yyyy") : "Desconocido";
 }
 
 <h1 class="title_main">Eliminar Empleado</h1>
@@ -36,7 +37,7 @@
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(model => model.FechaIngreso)</td>
-                    <td>@Html.DisplayFor(model => model.FechaIngreso.HasValue ? model.FechaIngreso.Value.ToString("dd/MM/yyyy") : "Desconocido")</td>
+                    <td>@fecha</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(model => model.Estado)</td>

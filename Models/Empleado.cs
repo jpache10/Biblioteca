@@ -29,7 +29,7 @@ public partial class Empleado
     [Column(TypeName = "decimal(5, 2)")]
     [Required(ErrorMessage = "El campo {0} es obligatorio")]
     [Display(Name = "Porciento de Comisión (0.00)", Prompt = "Ingrese la Comisión 0.10")]
-    public decimal? PorcientoComision { get; set; }
+    public required decimal PorcientoComision { get; set; }
 
     [Display(Name = "Fecha de ingreso", Prompt = "Seleccionar fecha de ingreso")]
     public DateOnly? FechaIngreso { get; set; }

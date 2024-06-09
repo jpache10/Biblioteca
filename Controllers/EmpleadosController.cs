@@ -102,6 +102,8 @@ namespace Biblioteca.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.TandaLaboral = new SelectList(new List<string> () {"Turno de mañana","Turno de tarde", "Turno de noche"});
             return View(empleado);
         }
 
@@ -137,6 +139,9 @@ namespace Biblioteca.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            
+            ViewBag.TandaLaboral = new SelectList(new List<string> () {"Turno de mañana","Turno de tarde", "Turno de noche"});
+            
             return View(empleado);
         }
 

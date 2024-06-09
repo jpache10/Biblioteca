@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Detalles Empleado";
+    string fecha = Model.FechaIngreso.HasValue ? Model.FechaIngreso.Value.ToString("dd / MM / yyyy") : "Desconocido";
+
 }
 
 <h1 class="title_main">Detalles Empleado</h1>
@@ -36,7 +38,7 @@
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(model => model.FechaIngreso)</td>
-                    <td>@Html.DisplayFor(model => model.FechaIngreso)</td>
+                    <td>@fecha</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(model => model.Estado)</td>
