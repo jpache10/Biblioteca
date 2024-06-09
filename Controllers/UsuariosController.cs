@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Models;
+using Biblioteca.Utils;
 
 namespace Biblioteca.Controllers
 {
@@ -45,6 +46,7 @@ namespace Biblioteca.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
+            ViewBag.TipoUser = new SelectList(new List<string> () {"Física", "Jurídica"});
             return View();
         }
 
@@ -55,10 +57,14 @@ namespace Biblioteca.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Identificador,Nombre,Cedula,NoCarnet,TipoPersona,Estado")] Usuario usuario)
         {
+             usuario.NoCarnet = NoCarnetUser.GenerarCode();
+                Console.WriteLine(NoCarnetUser.GenerarCode());
+
             if (ModelState.IsValid)
             {
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
+               
+                // _context.Add(usuario);
+                // await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(usuario);

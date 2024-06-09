@@ -1,10 +1,10 @@
 namespace Biblioteca.Utils
 {
 
-    public static partial class GenerarNoCarnet
+    public static partial class NoCarnetUser
     {
 
-        static string GenerarFormato()
+        static string GenerarCode()
         {
             Random rnd = new Random();
             string numeros = "";

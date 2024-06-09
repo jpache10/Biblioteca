@@ -13,15 +13,21 @@ public partial class Usuario
     public int Identificador { get; set; }
 
     [StringLength(100)]
+    [Display(Name = "Nombre", Prompt = "Ingrese el Nombre")]
     public string? Nombre { get; set; }
 
     [StringLength(20)]
+    [Required(ErrorMessage = "Este campo es requerido")]
+    [Display(Name = "Cédula / RNC", Prompt = "Ingrese la Cédula / RNC")]
     public string? Cedula { get; set; }
 
     [StringLength(20)]
+    [Display(Name = "No. de carnet", Prompt = "Ingrese el No. de carnet")]
     public string? NoCarnet { get; set; }
 
     [StringLength(50)]
+    [Required(ErrorMessage = "Este campo es requerido")]
+    [Display(Name = "Tipo de persona", Prompt = "Ingrese el Tipo de persona")]
     public string? TipoPersona { get; set; }
     public bool Estado { get; set; }
 

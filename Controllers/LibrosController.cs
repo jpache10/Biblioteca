@@ -35,7 +35,7 @@ namespace Biblioteca.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 libros = libros.Where(l =>
-                    (l.AnioPublicacion != null ? l.AnioPublicacion.ToString(): "0").ToLower().Contains(searchString.ToLower()) ||
+                    (l.AnioPublicacion != null ? l.AnioPublicacion.ToString() : "0").ToLower().Contains(searchString.ToLower()) ||
                     l.Descripcion.ToLower().Contains(searchString.ToLower()) ||
                     l.SignaturaTopografica.ToLower().Contains(searchString.ToLower()) ||
                     l.AutoresNavigation.Nombre.ToLower().Contains(searchString.ToLower()) ||
@@ -43,7 +43,7 @@ namespace Biblioteca.Controllers
                     l.IdiomaNavigation.Descripcion.ToLower().Contains(searchString.ToLower()) ||
                     l.EditoraNavigation.Descripcion.ToLower().Contains(searchString.ToLower()) ||
                     l.TipoBibliografiaNavigation.Descripcion.ToLower().Contains(searchString.ToLower()) ||
-                    (l.Estado ? "activo" : "inactivo").Contains(searchString.ToLower())
+                    (l.Estado ? "disponible" : "reservado").Contains(searchString.ToLower())
                 );
             }
 
@@ -52,7 +52,7 @@ namespace Biblioteca.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             return View(libros_view);
-           
+
         }
 
         // GET: Libros/Details/5
@@ -105,11 +105,11 @@ namespace Biblioteca.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Autores"] = new SelectList(_context.Autores, "Identificador", "Identificador", libro.Autores);
-            ViewData["Ciencia"] = new SelectList(_context.Ciencias, "Identificador", "Identificador", libro.Ciencia);
-            ViewData["Editora"] = new SelectList(_context.Editoras, "Identificador", "Identificador", libro.Editora);
-            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Identificador", libro.Idioma);
-            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Identificador", libro.TipoBibliografia);
+            ViewData["Autores"] = new SelectList(_context.Autores, "Identificador", "Nombre");
+            ViewData["Ciencia"] = new SelectList(_context.Ciencias, "Identificador", "Descripcion");
+            ViewData["Editora"] = new SelectList(_context.Editoras, "Identificador", "Descripcion");
+            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Descripcion");
+            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Descripcion");
             return View(libro);
         }
 
@@ -126,11 +126,12 @@ namespace Biblioteca.Controllers
             {
                 return NotFound();
             }
-            ViewData["Autores"] = new SelectList(_context.Autores, "Identificador", "Identificador", libro.Autores);
-            ViewData["Ciencia"] = new SelectList(_context.Ciencias, "Identificador", "Identificador", libro.Ciencia);
-            ViewData["Editora"] = new SelectList(_context.Editoras, "Identificador", "Identificador", libro.Editora);
-            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Identificador", libro.Idioma);
-            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Identificador", libro.TipoBibliografia);
+
+            ViewData["Autores"] = new SelectList(_context.Autores, "Identificador", "Nombre");
+            ViewData["Ciencia"] = new SelectList(_context.Ciencias, "Identificador", "Descripcion");
+            ViewData["Editora"] = new SelectList(_context.Editoras, "Identificador", "Descripcion");
+            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Descripcion");
+            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Descripcion");
             return View(libro);
         }
 
@@ -166,11 +167,11 @@ namespace Biblioteca.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Autores"] = new SelectList(_context.Autores, "Identificador", "Identificador", libro.Autores);
-            ViewData["Ciencia"] = new SelectList(_context.Ciencias, "Identificador", "Identificador", libro.Ciencia);
-            ViewData["Editora"] = new SelectList(_context.Editoras, "Identificador", "Identificador", libro.Editora);
-            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Identificador", libro.Idioma);
-            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Identificador", libro.TipoBibliografia);
+            ViewData["Autores"] = new SelectList(_context.Autores, "Identificador", "Nombre");
+            ViewData["Ciencia"] = new SelectList(_context.Ciencias, "Identificador", "Descripcion");
+            ViewData["Editora"] = new SelectList(_context.Editoras, "Identificador", "Descripcion");
+            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Descripcion");
+            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Descripcion");
             return View(libro);
         }
 
