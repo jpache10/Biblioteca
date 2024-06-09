@@ -11,7 +11,7 @@ public partial class Idioma
     [Key]
     public int Identificador { get; set; }
 
-    [Required(ErrorMessage = "Este mensaje es obligatorio")]
+    [Required(ErrorMessage = "Este campo es obligatorio")]
     [Display(Name = "Descripción", Prompt = "Ingrese el descripción")]
     [StringLength(255)]
     public required string Descripcion { get; set; }
