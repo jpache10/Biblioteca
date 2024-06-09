@@ -1,42 +1,56 @@
 @model Biblioteca.Models.Autore
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Autor";
 }
 
-<h1>Details</h1>
+<h1 class="title_main">Detalles Autor</h1>
 
-<div>
-    <h4>Autore</h4>
+<div class="mt-4">
+    <h3>Detalle</h3>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PaisOrigen)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PaisOrigen)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdiomaNativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdiomaNativo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Identificador">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="bg-white rounded gy-2 me-auto w-50">
+        <table class="table fs-5">
+            <thead>
+                <tr>
+                    <th scope="col">Campo</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Nombre)</td>
+                    <td>@Html.DisplayFor(model => model.Nombre)</td>
+                </tr>
+                                <tr>
+                    <td>@Html.DisplayNameFor(model => model.PaisOrigen)</td>
+                    <td>@Html.DisplayFor(model => model.PaisOrigen)</td>
+                </tr>
+                                <tr>
+                    <td>@Html.DisplayNameFor(model => model.IdiomaNativo)</td>
+                    <td>@Html.DisplayFor(model => model.IdiomaNativo)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Estado)</td>
+                    <td>
+                        <span class="@(Model.Estado ? "green-circle" : "red-circle")"></span>
+                        @(Model.Estado ? "Activo" : "Inactivo")
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Identificador" />
+        <div class="row row-cols-2 justify-content-start form-group mt-5">
+            <div class="col-1">
+                <a asp-action="Edit" asp-route-id="@Model?.Identificador" class="btn btn-primary">Editar</a>
+            </div>
+            <div class="col-1">
+                <a class="btn btn-light bg-white text-dark border border-dark" asp-action="Index">Regresar</a>
+            </div>
+
+        </div>
+    </form>
 </div>

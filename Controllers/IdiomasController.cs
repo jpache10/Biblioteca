@@ -30,7 +30,8 @@ namespace Biblioteca.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 idiomas = idiomas.Where(l =>
-                    l.Descripcion.ToLower().Contains(searchString.ToLower())
+                    l.Descripcion.ToLower().Contains(searchString.ToLower()) ||
+                    (l.Estado ? "activo" : "inactivo").Contains(searchString.ToLower())
                 );
             }
 

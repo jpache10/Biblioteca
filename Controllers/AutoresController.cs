@@ -34,7 +34,7 @@ namespace Biblioteca.Controllers
                     l.Nombre.ToLower().Contains(searchString.ToLower()) ||
                     l.PaisOrigen.ToLower().Contains(searchString.ToLower()) ||
                     l.IdiomaNativo.ToLower().Contains(searchString.ToLower()) ||
-                    l.Estado.ToString().ToLower().Contains(searchString.ToLower())
+                    (l.Estado ? "activo" : "inactivo").Contains(searchString.ToLower())
                 );
             }
 
@@ -151,19 +151,10 @@ namespace Biblioteca.Controllers
             {
                 try
                 {
-
-                    if (AutorNameExists(autore.Nombre))
-                    {
-                        ModelState.AddModelError("Nombre", "Ya existe un autor con este nombre.");
-                        
-                        ViewBag.Paises = new SelectList(paises);
-                        ViewBag.Idiomas = new SelectList(idiomas);
-                        return View(autore);
-                    }
-
+                    
                     _context.Update(autore);
                     await _context.SaveChangesAsync();
-                    
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
