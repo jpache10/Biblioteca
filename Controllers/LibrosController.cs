@@ -19,10 +19,40 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Libros
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            var sqlDatabaseBibliotecaContext = _context.Libros.Include(l => l.AutoresNavigation).Include(l => l.CienciaNavigation).Include(l => l.EditoraNavigation).Include(l => l.IdiomaNavigation).Include(l => l.TipoBibliografiaNavigation);
-            return View(await sqlDatabaseBibliotecaContext.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var libros = _context.Libros
+            .Include(l => l.AutoresNavigation)
+            .Include(l => l.CienciaNavigation)
+            .Include(l => l.EditoraNavigation)
+            .Include(l => l.IdiomaNavigation)
+            .Include(l => l.TipoBibliografiaNavigation).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                libros = libros.Where(l =>
+                    (l.AnioPublicacion != null ? l.AnioPublicacion.ToString(): "0").ToLower().Contains(searchString.ToLower()) ||
+                    l.Descripcion.ToLower().Contains(searchString.ToLower()) ||
+                    l.SignaturaTopografica.ToLower().Contains(searchString.ToLower()) ||
+                    l.AutoresNavigation.Nombre.ToLower().Contains(searchString.ToLower()) ||
+                    l.CienciaNavigation.Descripcion.ToLower().Contains(searchString.ToLower()) ||
+                    l.IdiomaNavigation.Descripcion.ToLower().Contains(searchString.ToLower()) ||
+                    l.EditoraNavigation.Descripcion.ToLower().Contains(searchString.ToLower()) ||
+                    l.TipoBibliografiaNavigation.Descripcion.ToLower().Contains(searchString.ToLower()) ||
+                    (l.Estado ? "activo" : "inactivo").Contains(searchString.ToLower())
+                );
+            }
+
+            var libros_view = PaginatedList<Libro>.Create(libros, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(libros_view);
+           
         }
 
         // GET: Libros/Details/5
@@ -51,12 +81,15 @@ namespace Biblioteca.Controllers
         // GET: Libros/Create
         public IActionResult Create()
         {
-            ViewData["Autores"] = new SelectList(_context.Autores, "Identificador", "Identificador");
-            ViewData["Ciencia"] = new SelectList(_context.Ciencias, "Identificador", "Identificador");
-            ViewData["Editora"] = new SelectList(_context.Editoras, "Identificador", "Identificador");
-            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Identificador");
-            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Identificador");
+
+            ViewData["Autores"] = new SelectList(_context.Autores, "Identificador", "Nombre");
+            ViewData["Ciencia"] = new SelectList(_context.Ciencias, "Identificador", "Descripcion");
+            ViewData["Editora"] = new SelectList(_context.Editoras, "Identificador", "Descripcion");
+            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Descripcion");
+            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Descripcion");
+
             return View();
+
         }
 
         // POST: Libros/Create

@@ -1,89 +1,21 @@
-@model IEnumerable<Biblioteca.Models.Libro>
+@model PaginatedList<Biblioteca.Models.Libro>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Libros";
+
+    var columns = new List<ColumnConfig<Biblioteca.Models.Libro>>
+    {
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "#", ValueSelector = item => item.Identificador, CssClass = "text-center" },
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "Libro", ValueSelector = item => item.Descripcion ?? "Desconocido" },
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "Signatura topográfica", ValueSelector = item => item.SignaturaTopografica ?? "Desconocido" },
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "ISBN \\ Tipo de bibliografía", ValueSelector = item => $"{item.Isbn} \\ {item?.TipoBibliografiaNavigation?.Descripcion}" },
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "Autor", ValueSelector = item => item?.AutoresNavigation.Nombre ?? "Desconocido" },
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "Ciencia", ValueSelector = item => item?.CienciaNavigation.Descripcion ?? "Desconocido"},
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "Idioma", ValueSelector = item => item?.IdiomaNavigation.Descripcion ?? "Desconocido"},
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "Editora", ValueSelector = item => item?.EditoraNavigation.Descripcion ?? "Desconocido"},
+        new ColumnConfig<Biblioteca.Models.Libro> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Disponible" : "Reservado")}"}
+    };
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SignaturaTopografica)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Isbn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AnioPublicacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AutoresNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CienciaNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EditoraNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdiomaNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoBibliografiaNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignaturaTopografica)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Isbn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnioPublicacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AutoresNavigation.Identificador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CienciaNavigation.Identificador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EditoraNavigation.Identificador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdiomaNavigation.Identificador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoBibliografiaNavigation.Identificador)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Identificador">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Identificador">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Identificador">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+@await Html.PartialAsync("_IndexHeader", ViewData["Title"].ToString())
+@await Html.PartialAsync("TableElementLibros", Tuple.Create(Model, columns))
