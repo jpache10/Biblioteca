@@ -28,7 +28,7 @@ public partial class Empleado
     public bool Estado { get; set; }
 
     [InverseProperty("EmpleadoNavigation")]
-    public virtual ICollection<UsuarioAdmin> UsuarioAdmins { get; set; } = new List<UsuarioAdmin>();
+    public virtual ICollection<UsuariosEmpleado> UsuariosEmpleados { get; set; } = new List<UsuariosEmpleado>();
 
     [InverseProperty("EmpleadoNavigation")]
     public virtual ICollection<PrestamoDevolucion> PrestamoDevolucions { get; set; } = new List<PrestamoDevolucion>();

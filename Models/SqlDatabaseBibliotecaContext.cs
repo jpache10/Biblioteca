@@ -33,11 +33,7 @@ public partial class SqlDatabaseBibliotecaContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-    //     optionsBuilder.UseSqlite(Configuration.GetConnectionString("WebApiDatabase"));
-    // }
-    // =>  optionsBuilder.UseSqlite("Name=ConnectionStrings:WebApiDatabase");
-
+    public virtual DbSet<UsuariosEmpleado> UsuariosEmpleado { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -78,6 +74,17 @@ public partial class SqlDatabaseBibliotecaContext : DbContext
             entity.Property(e => e.Estado).HasDefaultValue(true);
 
             entity.Property(e => e.FechaIngreso).HasDefaultValueSql("GETDATE()");
+        });
+
+         modelBuilder.Entity<UsuariosEmpleado>(entity =>
+        {
+            entity.HasKey(e => e.Identificador).HasName("PK__Empleado__F2374EB1C058497D");
+
+            entity.Property(e => e.Identificador).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Estado).HasDefaultValue(true);
+
+            entity.Property(e => e.FechaCreacion).HasDefaultValueSql("GETDATE()");
         });
 
         modelBuilder.Entity<Idioma>(entity =>

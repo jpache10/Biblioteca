@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteca.Models;
 
-public partial class UsuarioAdmin
+public partial class UsuariosEmpleado
 {
     [Key]
     public int Identificador { get; set; }
@@ -16,12 +16,15 @@ public partial class UsuarioAdmin
     [Display(Name = "Nombre de usuario", Prompt = "Ingrese el Nombre de usuario")]
     public required string Name { get; set; }
 
-    [StringLength(60, ErrorMessage = "La cantidad maxima de caracteres es {1}")]
+    [StringLength(200, ErrorMessage = "La cantidad maxima de caracteres es {1}")]
     [Required(ErrorMessage = "Este campo es obligatorio")]
     [Display(Name = "Contraseña", Prompt = "Ingrese la Contraseña")]
     public required string Password { get; set; }
-
+    
     public required string Rol { get; set; }
+
+    public required DateTime FechaCreacion { get; set; }
+    public DateTime FechaUltimoInicioSesion { get; set; }
 
     public bool Estado { get; set; }
 
@@ -31,7 +34,7 @@ public partial class UsuarioAdmin
 
     [ForeignKey("Empleado")]
     [Display(Name = "Empleado")]
-    [InverseProperty("UsuarioAdmins")]
+    [InverseProperty("UsuariosEmpleados")]
     public virtual Empleado? EmpleadoNavigation { get; set; }
 
 
