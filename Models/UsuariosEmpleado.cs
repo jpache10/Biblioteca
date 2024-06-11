@@ -24,8 +24,10 @@ public partial class UsuariosEmpleado
     public required string Rol { get; set; }
 
     public required DateTime FechaCreacion { get; set; }
+    
     public DateTime FechaUltimoInicioSesion { get; set; }
 
+    public bool RestablecerPassword {get; set;}
     public bool Estado { get; set; }
 
     [Required(ErrorMessage = "Este campo es requerido")]

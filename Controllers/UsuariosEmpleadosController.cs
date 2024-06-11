@@ -18,11 +18,31 @@ namespace Biblioteca.Controllers
             _context = context;
         }
 
-        // GET: UsuariosEmpleados
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            var sqlDatabaseBibliotecaContext = _context.UsuariosEmpleado.Include(u => u.EmpleadoNavigation);
-            return View(await sqlDatabaseBibliotecaContext.ToListAsync());
+
+            int pageSize = 5;
+            int currentPage = pageNumber ?? 1;
+
+            var usuariosEmpleados = _context.UsuariosEmpleado.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                usuariosEmpleados = usuariosEmpleados.Where(l =>
+                    l.Name.ToLower().Contains(searchString.ToLower()) ||
+                    l.Rol.ToLower().Contains(searchString.ToLower()) ||
+                    l.Identificador.ToString().ToLower().Contains(searchString.ToLower()) ||
+                    l.FechaCreacion.ToString().ToLower().Contains(searchString.ToLower()) ||
+                    (l.Estado ? "activo" : "inactivo").Contains(searchString.ToLower())
+                );
+            }
+
+            var usuariosEmpleado_view = PaginatedList<UsuariosEmpleado>.Create(usuariosEmpleados, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(usuariosEmpleado_view);
+
         }
 
         // GET: UsuariosEmpleados/Details/5

@@ -1,59 +1,18 @@
-@model IEnumerable<Biblioteca.Models.UsuariosEmpleado>
+@model PaginatedList<Biblioteca.Models.UsuariosEmpleado>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "UsuariosEmpleado";
+
+    var columns = new List<ColumnConfig<Biblioteca.Models.UsuariosEmpleado>>
+    {
+        new ColumnConfig<Biblioteca.Models.UsuariosEmpleado> { Header = "#", ValueSelector = item => item.Identificador, CssClass = "text-center" },
+        new ColumnConfig<Biblioteca.Models.UsuariosEmpleado> { Header = "Name", ValueSelector = item => item.Name ?? "Desconocido" },
+        new ColumnConfig<Biblioteca.Models.UsuariosEmpleado> { Header = "Rol", ValueSelector = item => item.Rol ?? "Desconocido" },
+        new ColumnConfig<Biblioteca.Models.UsuariosEmpleado> { Header = "Fecha Creación", ValueSelector = item => item.FechaCreacion.ToString("dd / MM / yyyy")},
+        new ColumnConfig<Biblioteca.Models.UsuariosEmpleado> { Header = "Última Sesión", ValueSelector = item => item.FechaUltimoInicioSesion.ToString("dd / MM / yyyy")},
+        new ColumnConfig<Biblioteca.Models.UsuariosEmpleado> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Activo" : "Inactivo")}"}
+    };
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rol)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmpleadoNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmpleadoNavigation.Identificador)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Identificador">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Identificador">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Identificador">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+@await Html.PartialAsync("_IndexHeader", ViewData["Title"].ToString())
+@await Html.PartialAsync("TableElementEmpleadoUsuario", Tuple.Create(Model, columns))
