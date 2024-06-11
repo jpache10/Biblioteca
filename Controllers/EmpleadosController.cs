@@ -67,8 +67,10 @@ namespace Biblioteca.Controllers
         // GET: Empleados/Create
         public IActionResult Create()
         {
+
             ViewBag.TandaLaboral = new SelectList(new List<string> () {"Turno de mañana","Turno de tarde", "Turno de noche"});
             return View();
+            
         }
 
         // POST: Empleados/Create

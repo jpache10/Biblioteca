@@ -23,7 +23,9 @@
         </div>
         <div class="col-7 form-group">
             <label asp-for="Rol" class="control-label fw-bold"></label>
-            <input asp-for="Rol" class="form-control" />
+            <select asp-for="Rol" class="form-control" asp-items="ViewBag.Rol">
+                <option value="">Seleccione un rol</option>
+            </select>
             <span asp-validation-for="Rol" class="text-danger"></span>
         </div>
         <div class="col-7 form-group">
@@ -31,6 +33,7 @@
             <select asp-for="Empleado" class="form-control" asp-items="ViewBag.Empleado">
                 <option value="">Seleccione un empleado</option>
             </select>
+            <span asp-validation-for="Empleado" class="text-danger"></span>
         </div>
         <div class="row row-cols-3 justify-content-start form-group mt-5">
             <div class="col-1">

@@ -68,6 +68,7 @@ namespace Biblioteca.Controllers
         // GET: UsuariosEmpleados/Create
         public IActionResult Create()
         {
+            ViewBag.Rol = new SelectList(new List<string> () {"Administrador", "Usuario"});
             ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre");
             return View();
         }
@@ -79,13 +80,17 @@ namespace Biblioteca.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Identificador,Name,Password,Rol,Estado,Empleado")] UsuariosEmpleado usuariosEmpleado)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(usuariosEmpleado);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador", usuariosEmpleado.Empleado);
+
+            ViewBag.Rol = new SelectList(new List<string> () {"Administrador", "Usuario"});
+            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre", usuariosEmpleado.Empleado);
+
             return View(usuariosEmpleado);
         }
 
@@ -102,6 +107,7 @@ namespace Biblioteca.Controllers
             {
                 return NotFound();
             }
+            
             ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador", usuariosEmpleado.Empleado);
             return View(usuariosEmpleado);
         }
