@@ -9,9 +9,9 @@ public partial class TiposBibliografium
     [Key]
     public int Identificador { get; set; }
 
-    [Required(ErrorMessage = "Este campo es requerido")]
     [Display(Name = "Descripción", Prompt = "Ingrese la descripción")]
-    [StringLength(255)]
+    [StringLength(255, ErrorMessage = "El número máximo de caracteres es {1}")]
+    [Required(ErrorMessage = "El campo {0} es obligatorio")]
     public required string Descripcion { get; set; }
 
     public bool Estado { get; set; }

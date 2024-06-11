@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Biblioteca.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,18 @@ var connectionString = builder.Configuration.GetConnectionString("WebApiDatabase
 builder.Services.AddSqlite<SqlDatabaseBibliotecaContext>(connectionString);
 #endregion
 
+#region configuración identity 
+
+builder.Services.AddAuthentication(options =>{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options => {
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(40);
+    options.SlidingExpiration = true;
+    options.LoginPath = "/Login";
+});
+
+#endregion
 
 builder.Services.AddControllersWithViews();
 
@@ -35,6 +48,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

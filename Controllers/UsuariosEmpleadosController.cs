@@ -68,7 +68,7 @@ namespace Biblioteca.Controllers
         // GET: UsuariosEmpleados/Create
         public IActionResult Create()
         {
-            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador");
+            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre");
             return View();
         }
 
