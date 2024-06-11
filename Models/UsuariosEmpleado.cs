@@ -27,10 +27,13 @@ public partial class UsuariosEmpleado
     [Required(ErrorMessage = "El campo {0} es obligatorio")]
     public required string Rol { get; set; }
 
+    [Display(Name = "Fecha de creación")]
     public required DateTime FechaCreacion { get; set; }
     
+    [Display(Name = "Última Sesión")]
     public DateTime FechaUltimoInicioSesion { get; set; }
 
+    [Display(Name = "Restablecer clave")]
     public bool RestablecerPassword { get; set; }
 
     public bool Estado { get; set; }
@@ -44,5 +47,11 @@ public partial class UsuariosEmpleado
     [InverseProperty("UsuariosEmpleados")]
     public virtual Empleado? EmpleadoNavigation { get; set; }
 
+
+    [NotMapped]
+    public string FechaCreacionFormateada => FechaCreacion.ToString("dd/MM/yyyy");
+
+    [NotMapped]
+    public string FechaUltimoInicioSesionFormateada => FechaUltimoInicioSesion.ToString("dd/MM/yyyy");
 
 }

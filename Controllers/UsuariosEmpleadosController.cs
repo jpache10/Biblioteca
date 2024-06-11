@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Models;
+using Biblioteca.Extensions;
 
 namespace Biblioteca.Controllers
 {
@@ -83,6 +84,10 @@ namespace Biblioteca.Controllers
 
             if (ModelState.IsValid)
             {
+
+                usuariosEmpleado.Password = usuariosEmpleado.Password.Sha256();
+                usuariosEmpleado.FechaCreacion = DateTime.Now;
+
                 _context.Add(usuariosEmpleado);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -108,13 +113,12 @@ namespace Biblioteca.Controllers
                 return NotFound();
             }
             
+            ViewBag.Rol = new SelectList(new List<string> () {"Administrador", "Usuario"});
             ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador", usuariosEmpleado.Empleado);
             return View(usuariosEmpleado);
         }
 
         // POST: UsuariosEmpleados/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Identificador,Name,Password,Rol,Estado,Empleado")] UsuariosEmpleado usuariosEmpleado)
@@ -144,7 +148,9 @@ namespace Biblioteca.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador", usuariosEmpleado.Empleado);
+
+            ViewBag.Rol = new SelectList(new List<string> () {"Administrador", "Usuario"});
+            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre", usuariosEmpleado.Empleado);
             return View(usuariosEmpleado);
         }
 
@@ -159,6 +165,7 @@ namespace Biblioteca.Controllers
             var usuariosEmpleado = await _context.UsuariosEmpleado
                 .Include(u => u.EmpleadoNavigation)
                 .FirstOrDefaultAsync(m => m.Identificador == id);
+
             if (usuariosEmpleado == null)
             {
                 return NotFound();
