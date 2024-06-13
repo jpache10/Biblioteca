@@ -24,63 +24,58 @@ namespace Biblioteca.Controllers
             _context = context;
         }
 
-    // [Route("/login")]
-    [HttpGet]
-    public IActionResult Login()
-    {
-        return View();
-    }
-
-    [AllowAnonymous]
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    // [Route("/login")]
-    public async Task<IActionResult> Login([Bind("Username,Password")] LoginModel loginModel)
-    {
-
-        if (!ModelState.IsValid)
+        [HttpGet]
+        public IActionResult Login()
         {
-            return View(loginModel);
+            return View();
         }
 
-
-        var usuario = await _context.UsuariosEmpleado.Where(x => x.Name == loginModel.Username && x.Password == loginModel.Password.Sha256()).FirstOrDefaultAsync();
-
-
-        // Aquí iría tu lógica de autenticación, por ejemplo:
-        if (usuario != null)
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("Username,Password")] LoginModel loginModel)
         {
-            var claims = new List<Claim>
+
+            if (!ModelState.IsValid)
             {
-                new Claim(ClaimTypes.Name, usuario.Name),
-                new Claim(ClaimTypes.Role, usuario.Rol),
-                new Claim(ClaimTypes.PrimarySid, usuario.Identificador.ToString()),
-                new Claim(ClaimTypes.Sid, usuario.Empleado.ToString()),
-            };
+                return View(loginModel);
+            }
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var authProperties = new AuthenticationProperties
+            var usuario = await _context.UsuariosEmpleado.Where(x => x.Name == loginModel.Username && x.Password == loginModel.Password.Sha256()).FirstOrDefaultAsync();
+
+            if (usuario != null)
             {
-                // Configuración adicional si es necesario
-            };
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, usuario.Name),
+                    new Claim(ClaimTypes.Role, usuario.Rol),
+                    new Claim(ClaimTypes.PrimarySid, usuario.Identificador.ToString()),
+                    new Claim(ClaimTypes.Sid, usuario.Empleado.ToString()),
+                };
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties
+                {
+                    AllowRefresh = true
+                };
 
-            return RedirectToAction("Index", "Home");
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectos");
+            return View();
         }
 
-         ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectos");
-        return View();
+        [AllowAnonymous]
+        [Route("/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
+        }
     }
-
-    [AllowAnonymous]
-    [Route("/logout")]
-    public async Task<IActionResult> Logout()
-    {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("Login", "Account");
-    }
-}
       
-    }
+}
 
