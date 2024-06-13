@@ -72,3 +72,7 @@ html {
 body {
   /* margin-bottom: 60px; */
 }
+
+.card-login {
+  width: 22rem;
+}

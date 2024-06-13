@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Models;
 using Biblioteca.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Biblioteca.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class UsuariosEmpleadosController : Controller
     {
         private readonly SqlDatabaseBibliotecaContext _context;
@@ -57,7 +59,7 @@ namespace Biblioteca.Controllers
             var usuariosEmpleado = await _context.UsuariosEmpleado
                 .Include(u => u.EmpleadoNavigation)
                 .FirstOrDefaultAsync(m => m.Identificador == id);
-                
+
             if (usuariosEmpleado == null)
             {
                 return NotFound();
@@ -69,7 +71,7 @@ namespace Biblioteca.Controllers
         // GET: UsuariosEmpleados/Create
         public IActionResult Create()
         {
-            ViewBag.Rol = new SelectList(new List<string> () {"Administrador", "Usuario"});
+            ViewBag.Rol = new SelectList(new List<string>() { "Administrador", "Usuario" });
             ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre");
             return View();
         }
@@ -82,6 +84,11 @@ namespace Biblioteca.Controllers
         public async Task<IActionResult> Create([Bind("Identificador,Name,Password,Rol,Estado,Empleado")] UsuariosEmpleado usuariosEmpleado)
         {
 
+            if (_context.UsuariosEmpleado.Any(e => e.Rol == usuariosEmpleado.Rol && e.Empleado == usuariosEmpleado.Empleado))
+            {
+                ModelState.AddModelError(string.Empty, "El empleado ya tiene una usuario con este rol, existe.");
+            }
+
             if (ModelState.IsValid)
             {
 
@@ -93,7 +100,7 @@ namespace Biblioteca.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Rol = new SelectList(new List<string> () {"Administrador", "Usuario"});
+            ViewBag.Rol = new SelectList(new List<string>() { "Administrador", "Usuario" });
             ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre", usuariosEmpleado.Empleado);
 
             return View(usuariosEmpleado);
@@ -112,16 +119,16 @@ namespace Biblioteca.Controllers
             {
                 return NotFound();
             }
-            
-            ViewBag.Rol = new SelectList(new List<string> () {"Administrador", "Usuario"});
-            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador", usuariosEmpleado.Empleado);
+
+            ViewBag.Rol = new SelectList(new List<string>() { "Administrador", "Usuario" });
+            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre", usuariosEmpleado.Empleado);
             return View(usuariosEmpleado);
         }
 
         // POST: UsuariosEmpleados/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Identificador,Name,Password,Rol,Estado,Empleado")] UsuariosEmpleado usuariosEmpleado)
+        public async Task<IActionResult> Edit(int id, [Bind("Identificador,Name,Password,Rol,Estado,RestablecerPassword,Empleado")] UsuariosEmpleado usuariosEmpleado)
         {
             if (id != usuariosEmpleado.Identificador)
             {
@@ -149,8 +156,21 @@ namespace Biblioteca.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Rol = new SelectList(new List<string> () {"Administrador", "Usuario"});
+            ViewBag.Rol = new SelectList(new List<string>() { "Administrador", "Usuario" });
             ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre", usuariosEmpleado.Empleado);
+
+            foreach (var state in ModelState)
+            {
+                var key = state.Key;
+                var errors = state.Value.Errors;
+                foreach (var error in errors)
+                {
+                    // Aquí puedes ver los errores en el depurador o registrarlos
+                    Console.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
+                }
+            }
+
+
             return View(usuariosEmpleado);
         }
 
@@ -192,6 +212,14 @@ namespace Biblioteca.Controllers
         private bool UsuariosEmpleadoExists(int id)
         {
             return _context.UsuariosEmpleado.Any(e => e.Identificador == id);
+        }
+
+        private List<Empleado> EmpleadosSinUsuarios()
+        {
+
+            return _context.Empleados
+                                     .Where(e => !e.UsuariosEmpleados.Any())
+                                     .ToList();
         }
     }
 }

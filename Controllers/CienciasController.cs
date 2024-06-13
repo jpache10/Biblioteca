@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Biblioteca.Controllers
 {
+    [Authorize(Roles = "Administrador,Usuario")]
     public class CienciasController : Controller
     {
         private readonly SqlDatabaseBibliotecaContext _context;

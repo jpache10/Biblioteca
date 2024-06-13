@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Biblioteca.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Biblioteca.Controllers;
 
+[Authorize(Roles = "Administrador,Usuario")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

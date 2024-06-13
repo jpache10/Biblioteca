@@ -22,7 +22,8 @@ builder.Services.AddAuthentication(options =>{
 }).AddCookie(options => {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(40);
     options.SlidingExpiration = true;
-    options.LoginPath = "/Login";
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
 });
 
 #endregion

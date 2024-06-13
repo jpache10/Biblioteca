@@ -13,7 +13,7 @@ public partial class UsuariosEmpleado
 
     [StringLength(60, ErrorMessage = "La cantidad maxima de caracteres es {1}")]
     [Required(ErrorMessage = "El campo {0} es obligatorio")]
-    [Display(Name = "Nombre de usuario", Prompt = "Ingrese el Nombre de usuario")]
+    [Display(Name = "Nombre de usuario", Prompt = "Ingrese el nombre de usuario")]
     public required string Name { get; set; }
 
 
