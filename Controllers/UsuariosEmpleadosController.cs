@@ -86,7 +86,7 @@ namespace Biblioteca.Controllers
 
             if (_context.UsuariosEmpleado.Any(e => e.Rol == usuariosEmpleado.Rol && e.Empleado == usuariosEmpleado.Empleado))
             {
-                ModelState.AddModelError(string.Empty, "El empleado ya tiene una usuario con este rol, existe.");
+                ModelState.AddModelError(string.Empty, "El empleado ya tiene un usuario con este rol, existe.");
             }
 
             if (ModelState.IsValid)
