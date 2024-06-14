@@ -21,10 +21,37 @@ namespace Biblioteca.Controllers
         }
 
         // GET: PrestamoDevolucions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            var sqlDatabaseBibliotecaContext = _context.PrestamoDevolucions.Include(p => p.EmpleadoNavigation).Include(p => p.LibroNavigation).Include(p => p.UsuarioNavigation);
-            return View(await sqlDatabaseBibliotecaContext.ToListAsync());
+
+            int pageSize = 10;
+            int currentPage = pageNumber ?? 1;
+
+            var prestamos = _context.PrestamoDevolucions
+            .Include(p => p.EmpleadoNavigation)
+            .Include(p => p.LibroNavigation)
+            .Include(p => p.UsuarioNavigation).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                prestamos = prestamos.Where(l =>
+                    l.NoPrestamo.ToString().ToLower().Contains(searchString.ToLower()) ||
+                    l.CantidadDias.ToString().ToLower().Contains(searchString.ToLower()) ||
+                    l.MontoXdia.ToString().ToLower().Contains(searchString.ToLower()) ||
+                    l.Comentario.Trim().ToLower().Contains(searchString.ToLower()) ||
+                    (l.EmpleadoNavigation == null ? "" : l.EmpleadoNavigation.Nombre).ToLower().Contains(searchString.ToLower()) ||
+                   (l.EmpleadoNavigation == null ? "" : l.EmpleadoNavigation.Nombre).ToLower().Contains(searchString.ToLower()) ||
+                   (l.EmpleadoNavigation == null ? "" : l.EmpleadoNavigation.Nombre).ToLower().Contains(searchString.ToLower()) ||
+                    (l.Estado ? "Prestado" : "Devuelto").Contains(searchString.ToLower())
+                );
+            }
+
+            var prestamos_view = PaginatedList<PrestamoDevolucion>.Create(prestamos, currentPage, pageSize);
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(prestamos_view);
+
         }
 
         // GET: PrestamoDevolucions/Details/5
@@ -40,6 +67,7 @@ namespace Biblioteca.Controllers
                 .Include(p => p.LibroNavigation)
                 .Include(p => p.UsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.NoPrestamo == id);
+                
             if (prestamoDevolucion == null)
             {
                 return NotFound();
@@ -51,9 +79,9 @@ namespace Biblioteca.Controllers
         // GET: PrestamoDevolucions/Create
         public IActionResult Create()
         {
-            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador");
-            ViewData["Libro"] = new SelectList(_context.Libros, "Identificador", "Identificador");
-            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Identificador", "Identificador");
+            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre");
+            ViewData["Libro"] = new SelectList(_context.Libros, "Identificador", "Descripcion");
+            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Identificador", "Nombre");
             return View();
         }
 

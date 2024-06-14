@@ -15,17 +15,19 @@
         <div class="row flex-nowrap">
             <header class="col-auto col-md-3 col-xl-2 px-0 bg-dark">
                 <nav class="d-flex flex-column align-items-center align-items-sm-start pt-2 text-white min-vh-100 ms-2">
-                    <a class="d-flex align-items-center py-4 ms-1 mb-md-0 me-md-auto text-white text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">
+                    <a class="d-flex align-items-center py-4 ms-1 mb-md-0 me-md-auto text-white text-decoration-none"
+                        asp-area="" asp-controller="Home" asp-action="Index">
                         <span class="fs-5 fw-bolder ps-3">Biblioteca</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 w-100" id="menu">
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item my-2
-                            ">
+                                ">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="/images/user_profile_admin.png" class="img-fluid h-80 w-80 mx-1" alt="Imagen">
+                                        <img src="/images/user_profile_admin.png" class="img-fluid h-80 w-80 mx-1"
+                                            alt="Imagen">
                                     </div>
                                     <div class="col-8 p-0">
                                         <div class="row">
@@ -35,16 +37,19 @@
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-12">
-                                                <p>Rol: @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value</p>
-                                                <a class="btn btn-outline-danger" asp-controller="Account" asp-action="Logout">Cerrar Sesión</a>
+                                                <p>Rol: @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
+                                                </p>
+                                                <a class="btn btn-outline-danger" asp-controller="Account"
+                                                    asp-action="Logout">Cerrar Sesión</a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>                                   
-                            </li>                                    
-                        } 
+                                </div>
+                            </li>
+                        }
                         <li class="nav-item my-2 @Html.IsActive("Home", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Home" asp-action="Index">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Home"
+                                asp-action="Index">
                                 <div class="row row-cols-2 align-items-center">
                                     <img class="iconos-width" src="/images/icon_dashboard.svg" alt="Icono dashboard" />
                                     <span class="text-start">Dashboard</span>
@@ -52,81 +57,101 @@
                             </a>
                         </li>
                         <li class="nav-item my-2 @Html.IsActive("TiposBibliografium", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0 "  asp-area="" asp-controller="TiposBibliografium" asp-action="Index">
+                            <a class="nav-link ps-3 align-middle text-white px-0 " asp-area=""
+                                asp-controller="TiposBibliografium" asp-action="Index">
                                 <div class="row row-cols-2 align-items-center">
-                                    <img class="iconos-width" src="/images/icon_bibliografia.svg" alt="Icono bibliografia" />
+                                    <img class="iconos-width" src="/images/icon_bibliografia.svg"
+                                        alt="Icono bibliografia" />
                                     <span class="text-start">Bibliografía</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item my-2 @Html.IsActive("Editoras", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Editoras" asp-action="Index">
-                                 <div class="row row-cols-2 align-items-center">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Editoras"
+                                asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
                                     <img class="iconos-width" src="/images/icon_editoras.svg" alt="Icono editoras" />
-                                <span class="ms-1 d-none d-sm-inline">Editoras</span>
+                                    <span class="ms-1 d-none d-sm-inline">Editoras</span>
                                 </div>
                             </a>
-                        </li>                        
+                        </li>
                         <li class="nav-item my-2 @Html.IsActive("Ciencias", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Ciencias" asp-action="Index">
-                                 <div class="row row-cols-2 align-items-center">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Ciencias"
+                                asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
                                     <img class="iconos-width" src="/images/icon_ciencias.svg" alt="Icono ciencias" />
-                                <span class="ms-1 d-none d-sm-inline">Ciencias</span>
+                                    <span class="ms-1 d-none d-sm-inline">Ciencias</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item my-2 @Html.IsActive("Idiomas", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Idiomas" asp-action="Index">
-                                  <div class="row row-cols-2 align-items-center">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Idiomas"
+                                asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
                                     <img class="iconos-width" src="/images/icon_Idiomas.svg" alt="Icono idioma" />
-                                <span class="ms-1 d-none d-sm-inline">Idiomas</span>
+                                    <span class="ms-1 d-none d-sm-inline">Idiomas</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item my-2 @Html.IsActive("Autores", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Autores" asp-action="Index">
-                                 <div class="row row-cols-2 align-items-center">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Autores"
+                                asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
                                     <img class="iconos-width" src="/images/icon_autores.svg" alt="Icono autores" />
-                                <span class="ms-1 d-none d-sm-inline">Autores</span>
+                                    <span class="ms-1 d-none d-sm-inline">Autores</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item my-2 @Html.IsActive("Libros", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Libros" asp-action="Index">
-                                 <div class="row row-cols-2 align-items-center">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Libros"
+                                asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
                                     <img class="iconos-width" src="/images/icon_libros.svg" alt="Icono libros" />
-                                <span class="ms-1 d-none d-sm-inline">Libros</span>
+                                    <span class="ms-1 d-none d-sm-inline">Libros</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item my-2 @Html.IsActive("Usuarios", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Usuarios" asp-action="Index">
-                                 <div class="row row-cols-2 align-items-center">
+                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Usuarios"
+                                asp-action="Index">
+                                <div class="row row-cols-2 align-items-center">
                                     <img class="iconos-width" src="/images/icon_usuarios.svg" alt="Icono usuarios" />
-                                <span class="ms-1 d-none d-sm-inline">Usuarios</span>
+                                    <span class="ms-1 d-none d-sm-inline">Usuarios</span>
                                 </div>
                             </a>
                         </li>
-                        @if (User.IsInRole("Administrador"))
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrador") || User.IsInRole("Usuario")))
                         {
+                            <li class="nav-item my-2 @Html.IsActive("PrestamoDevolucions", "Index")">
+                                <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="PrestamoDevolucions"
+                                    asp-action="Index">
+                                    <div class="row row-cols-2 align-items-center">
+                                        <img class="iconos-width" src="/images/icon_loans.svg" alt="Icono usuarios" />
+                                        <span class="ms-1 d-none d-sm-inline">Prestamos</span>
+                                    </div>
+                                </a>
+                            </li>
+
                             <li class="nav-item my-2 @Html.IsActive("Empleados", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Empleados" asp-action="Index">
-                                 <div class="row row-cols-2 align-items-center">
-                                    <img class="iconos-width" src="/images/icon_employees.svg" alt="Icono usuarios" />
-                                <span class="ms-1 d-none d-sm-inline">Empleados</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item my-2 @Html.IsActive("UsuariosEmpleados", "Index")">
-                            <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="UsuariosEmpleados" asp-action="Index">
-                                 <div class="row row-cols-2 align-items-center">
-                                    <img class="iconos-width" src="/images/icon_admin.svg" alt="Icono usuarios" />
-                                <span class="ms-1 d-none d-sm-inline">Administradores</span>
-                                </div>
-                            </a>
-                        </li>        
+                                <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="Empleados"
+                                    asp-action="Index">
+                                    <div class="row row-cols-2 align-items-center">
+                                        <img class="iconos-width" src="/images/icon_employees.svg" alt="Icono usuarios" />
+                                        <span class="ms-1 d-none d-sm-inline">Empleados</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item my-2 @Html.IsActive("UsuariosEmpleados", "Index")">
+                                <a class="nav-link ps-3 align-middle text-white px-0" asp-area=""
+                                    asp-controller="UsuariosEmpleados" asp-action="Index">
+                                    <div class="row row-cols-2 align-items-center">
+                                        <img class="iconos-width" src="/images/icon_admin.svg" alt="Icono usuarios" />
+                                        <span class="ms-1 d-none d-sm-inline">Administradores</span>
+                                    </div>
+                                </a>
+                            </li>
                         }
-                                        
+
                     </ul>
                 </nav>
             </header>
@@ -136,7 +161,7 @@
                     <div class="pt-4 px-3">
                         @RenderBody()
                     </div>
-                    
+
                 </main>
             </div>
 

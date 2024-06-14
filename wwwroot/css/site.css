@@ -74,5 +74,6 @@ body {
 }
 
 .card-login {
-  width: 22rem;
+  padding: 1rem;
+  width: 24rem;
 }

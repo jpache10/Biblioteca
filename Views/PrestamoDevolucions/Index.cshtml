@@ -1,83 +1,21 @@
-@model IEnumerable<Biblioteca.Models.PrestamoDevolucion>
+@model PaginatedList<Biblioteca.Models.PrestamoDevolucion>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Prestamos";
+
+    var columns = new List<ColumnConfig<Biblioteca.Models.PrestamoDevolucion>>
+    {
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "#", ValueSelector = item => item.NoPrestamo, CssClass = "text-center" },
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Empleado", ValueSelector = item => item.EmpleadoNavigation.Nombre ?? "Desconocido" },
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Usuario", ValueSelector = item => item.UsuarioNavigation.Nombre ?? "Desconocido"},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Libro", ValueSelector = item => item.LibroNavigation.Descripcion ?? "Desconocido"},
+            new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Cantidad días", ValueSelector = item => item.UsuarioNavigation.Nombre ?? "Desconocido"},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "MontoxDías", ValueSelector = item => item.UsuarioNavigation.Nombre ?? "Desconocido"},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Fecha prestamo", ValueSelector = item => item.FechaPrestamo.Value.ToString("dd / MM / yyyy") ?? "No especificado"},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Fecha devolución", ValueSelector = item => item.FechaDevolucion.Value.ToString("dd / MM / yyyy") ?? "No especificado"},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Prestado" : "Devuelto")}"}
+    };
 }
 
-<h1>Index</h1>
-
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaPrestamo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaDevolucion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MontoXdia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CantidadDias)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comentario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmpleadoNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LibroNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaPrestamo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaDevolucion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MontoXdia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CantidadDias)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmpleadoNavigation.Identificador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LibroNavigation.Identificador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioNavigation.Identificador)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.NoPrestamo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.NoPrestamo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.NoPrestamo">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+@await Html.PartialAsync("_IndexHeader", ViewData["Title"].ToString())
+@await Html.PartialAsync("TableElementPrestamo", Tuple.Create(Model, columns))
