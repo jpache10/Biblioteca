@@ -14,7 +14,7 @@ var connectionString = builder.Configuration.GetConnectionString("WebApiDatabase
 builder.Services.AddSqlite<SqlDatabaseBibliotecaContext>(connectionString);
 #endregion
 
-#region configuración identity 
+#region configuración de autenticación 
 
 builder.Services.AddAuthentication(options =>{
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -50,6 +50,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// aplicando middleware de autenticacion
 app.UseAuthentication();
 
 app.UseAuthorization();
