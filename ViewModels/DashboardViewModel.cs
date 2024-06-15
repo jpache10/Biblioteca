@@ -2,20 +2,20 @@
 public class DashboardViewModel
 {
 
-    
-    public int TotalEmpledos { get; set; }
-    public int TotalUsuarios { get; set; }
-    public List<DashBoardCard> Cards {get; set; }
+    public DashboardViewModel(string descripcion = "Bienvenido a la biblioteca de unapec")
+    {
+        Descripcion = descripcion;
+        Cards = new List<DashBoardCard>();
+    }
+
+    public string Descripcion { get; set; }
+    public List<DashBoardCard> Cards { get; set; }
 
 }
 
-public record DashBoardCard (
-    string Title,
-    string Description,
-    Dictionary<string, int> estadisticas
-);
-//     public required string Title { get; init; }
-//     public string Description { get; init; }
-//     public int? CantidadRegistro { get; init; }
-//     public int? CantidadRegistro { get; init; }
-// }
+public class DashBoardCard
+{
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public Dictionary<string, int> estadistica { get; set; }
+}
