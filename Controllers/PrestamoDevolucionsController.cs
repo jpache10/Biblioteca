@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Biblioteca.Controllers
 {
@@ -21,38 +23,78 @@ namespace Biblioteca.Controllers
         }
 
         // GET: PrestamoDevolucions
-        public async Task<IActionResult> Index(string searchString, int? pageNumber)
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
 
             int pageSize = 10;
-            int currentPage = pageNumber ?? 1;
+            int currentPage = pageNumber;
 
             var prestamos = _context.PrestamoDevolucions
             .Include(p => p.EmpleadoNavigation)
             .Include(p => p.LibroNavigation)
             .Include(p => p.UsuarioNavigation).AsQueryable();
 
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                prestamos = prestamos.Where(l =>
-                    l.NoPrestamo.ToString().ToLower().Contains(searchString.ToLower()) ||
-                    l.CantidadDias.ToString().ToLower().Contains(searchString.ToLower()) ||
-                    l.MontoXdia.ToString().ToLower().Contains(searchString.ToLower()) ||
-                    l.Comentario.Trim().ToLower().Contains(searchString.ToLower()) ||
-                    (l.EmpleadoNavigation == null ? "" : l.EmpleadoNavigation.Nombre).ToLower().Contains(searchString.ToLower()) ||
-                   (l.EmpleadoNavigation == null ? "" : l.EmpleadoNavigation.Nombre).ToLower().Contains(searchString.ToLower()) ||
-                   (l.EmpleadoNavigation == null ? "" : l.EmpleadoNavigation.Nombre).ToLower().Contains(searchString.ToLower()) ||
-                    (l.Estado ? "Prestado" : "Devuelto").Contains(searchString.ToLower())
-                );
-            }
-
             var prestamos_view = PaginatedList<PrestamoDevolucion>.Create(prestamos, currentPage, pageSize);
 
-            ViewData["CurrentFilter"] = searchString;
+            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Descripcion");
+            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Descripcion");
 
-            return View(prestamos_view);
+            var prestamoDevolucionModel =  new PrestamoDevolucionSearchViewModel() {
+                prestamoDevolucions = prestamos_view,
+            };
+
+            return View(prestamoDevolucionModel);
 
         }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Index(PrestamoDevolucionSearchViewModel searchModel, int pageNumber = 1)
+    {
+        var query =  _context.PrestamoDevolucions
+            .Include(p => p.EmpleadoNavigation)
+            .Include(p => p.LibroNavigation)
+            .Include(p => p.UsuarioNavigation).AsQueryable();
+
+        if (searchModel.FechaInicioPrestamo.HasValue)
+        {
+            query = query.Where(p => p.FechaPrestamo >= DateOnly.FromDateTime(searchModel.FechaInicioPrestamo.Value));
+        }
+
+        if (searchModel.FechaFinPrestamo.HasValue)
+        {
+            query = query.Where(p => p.FechaPrestamo <= DateOnly.FromDateTime(searchModel.FechaFinPrestamo.Value));
+        }
+
+        if (searchModel.FechaInicioDevolucion.HasValue)
+        {
+            query = query.Where(p => p.FechaDevolucion >= DateOnly.FromDateTime(searchModel.FechaInicioDevolucion.Value));
+        }
+
+        if (searchModel.FechaFinDevolucion.HasValue)
+        {
+            query = query.Where(p => p.FechaDevolucion <= DateOnly.FromDateTime(searchModel.FechaFinDevolucion.Value));
+        }
+
+        if (searchModel.TipoBibliografia.HasValue)
+        {
+            query = query.Where(p => p.LibroNavigation.TipoBibliografia == searchModel.TipoBibliografia);
+        }
+
+        if (searchModel.Idioma.HasValue)
+        {
+            query = query.Where(p => p.LibroNavigation.Idioma == searchModel.Idioma);
+        }
+
+        searchModel.prestamoDevolucions = PaginatedList<PrestamoDevolucion>.Create(query, pageNumber, 10);
+
+
+
+            ViewData["Idioma"] = new SelectList(_context.Idiomas, "Identificador", "Descripcion");
+            ViewData["TipoBibliografia"] = new SelectList(_context.TiposBibliografia, "Identificador", "Descripcion");
+
+        return View(searchModel);
+    }
 
         // GET: PrestamoDevolucions/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -90,17 +132,25 @@ namespace Biblioteca.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NoPrestamo,Empleado,Libro,Usuario,FechaPrestamo,FechaDevolucion,MontoXdia,CantidadDias,Comentario,Estado")] PrestamoDevolucion prestamoDevolucion)
+        public async Task<IActionResult> Create([Bind("NoPrestamo,Libro,Usuario,FechaPrestamo,FechaDevolucion,MontoXdia,CantidadDias,Comentario,Estado")] PrestamoDevolucion prestamoDevolucion)
         {
+            prestamoDevolucion.Empleado = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value);
+            prestamoDevolucion.FechaPrestamo = DateOnly.FromDateTime(DateTime.Now);
+
+            if(prestamoDevolucion.Empleado == null) 
+            {
+                ModelState.AddModelError(string.Empty, "Por favor, volver a loguearse el ID del usuario no esta disponible");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(prestamoDevolucion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador", prestamoDevolucion.Empleado);
-            ViewData["Libro"] = new SelectList(_context.Libros, "Identificador", "Identificador", prestamoDevolucion.Libro);
-            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Identificador", "Identificador", prestamoDevolucion.Usuario);
+            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre", prestamoDevolucion.Empleado);
+            ViewData["Libro"] = new SelectList(_context.Libros, "Identificador", "Descripcion", prestamoDevolucion.Libro);
+            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Identificador", "Nombre", prestamoDevolucion.Usuario);
             return View(prestamoDevolucion);
         }
 
@@ -117,9 +167,9 @@ namespace Biblioteca.Controllers
             {
                 return NotFound();
             }
-            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador", prestamoDevolucion.Empleado);
-            ViewData["Libro"] = new SelectList(_context.Libros, "Identificador", "Identificador", prestamoDevolucion.Libro);
-            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Identificador", "Identificador", prestamoDevolucion.Usuario);
+            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre", prestamoDevolucion.Empleado);
+            ViewData["Libro"] = new SelectList(_context.Libros, "Identificador", "Descripcion", prestamoDevolucion.Libro);
+            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Identificador", "Nombre", prestamoDevolucion.Usuario);
             return View(prestamoDevolucion);
         }
 
@@ -155,9 +205,11 @@ namespace Biblioteca.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Identificador", prestamoDevolucion.Empleado);
-            ViewData["Libro"] = new SelectList(_context.Libros, "Identificador", "Identificador", prestamoDevolucion.Libro);
-            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Identificador", "Identificador", prestamoDevolucion.Usuario);
+            
+            ViewData["Empleado"] = new SelectList(_context.Empleados, "Identificador", "Nombre", prestamoDevolucion.Empleado);
+            ViewData["Libro"] = new SelectList(_context.Libros, "Identificador", "Descripcion", prestamoDevolucion.Libro);
+            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Identificador", "Nombre", prestamoDevolucion.Usuario);
+            
             return View(prestamoDevolucion);
         }
 
@@ -190,7 +242,9 @@ namespace Biblioteca.Controllers
             var prestamoDevolucion = await _context.PrestamoDevolucions.FindAsync(id);
             if (prestamoDevolucion != null)
             {
-                _context.PrestamoDevolucions.Remove(prestamoDevolucion);
+                prestamoDevolucion.Estado = true;
+                prestamoDevolucion.FechaDevolucion = DateOnly.FromDateTime(DateTime.Now);
+                _context.PrestamoDevolucions.Update(prestamoDevolucion);
             }
 
             await _context.SaveChangesAsync();

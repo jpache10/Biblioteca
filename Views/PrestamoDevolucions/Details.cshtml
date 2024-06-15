@@ -1,72 +1,81 @@
 @model Biblioteca.Models.PrestamoDevolucion
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Prestamo o Devolución";
 }
 
-<h1>Details</h1>
+<h1 class="title_main">Detalles Prestamo o Devolución</h1>
 
-<div>
-    <h4>PrestamoDevolucion</h4>
+<div class="mt-4">
+    <h3>Detalle</h3>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaPrestamo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaPrestamo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaDevolucion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaDevolucion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MontoXdia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MontoXdia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CantidadDias)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CantidadDias)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Comentario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Comentario)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpleadoNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmpleadoNavigation.Identificador)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LibroNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LibroNavigation.Identificador)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UsuarioNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsuarioNavigation.Identificador)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.NoPrestamo">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="bg-white rounded gy-2 me-auto w-75 w-xs-100">
+        <table class="table fs-5">
+            <thead>
+                <tr>
+                    <th scope="col">Campo</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.NoPrestamo)</td>
+                    <td>@Html.DisplayFor(model => model.NoPrestamo)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.CantidadDias)</td>
+                    <td>@Html.DisplayFor(model => model.CantidadDias)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Empleado)</td>
+                    <td>@Html.DisplayFor(model => model.EmpleadoNavigation.Nombre)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Libro)</td>
+                    <td>@Html.DisplayFor(model => model.LibroNavigation.Descripcion)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Usuario)</td>
+                    <td>@Html.DisplayFor(model => model.UsuarioNavigation.Nombre)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.FechaPrestamo)</td>
+                    <td>@Html.DisplayFor(model => model.FechaPrestamo)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.FechaDevolucion)</td>
+                    <td>@Html.DisplayFor(model => model.FechaDevolucion)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.MontoXdia)</td>
+                    <td>@Html.DisplayFor(model => model.MontoXdia)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.CantidadDias)</td>
+                    <td>@Html.DisplayFor(model => model.CantidadDias)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Comentario)</td>
+                    <td>@Html.DisplayFor(model => model.Comentario)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Estado)</td>
+                    <td>
+                        <span class="@(Model.Estado ? "green-circle" : "red-circle")"></span>
+                        @(Model.Estado ? "Devuelto" : "Prestado")
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row row-cols-2 justify-content-start form-group mt-5">
+        <div class="col-1">
+            <a asp-action="Edit" asp-route-id="@Model?.NoPrestamo" class="btn btn-primary">Editar</a>
+        </div>
+        <div class="col-1">
+            <a class="btn btn-light bg-white text-dark border border-dark" asp-action="Index">Regresar</a>
+        </div>
+
+    </div>
 </div>

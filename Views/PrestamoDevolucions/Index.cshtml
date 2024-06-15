@@ -1,4 +1,4 @@
-@model PaginatedList<Biblioteca.Models.PrestamoDevolucion>
+@model PrestamoDevolucionSearchViewModel
 
 @{
     ViewData["Title"] = "Prestamos";
@@ -9,13 +9,90 @@
         new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Empleado", ValueSelector = item => item.EmpleadoNavigation.Nombre ?? "Desconocido" },
         new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Usuario", ValueSelector = item => item.UsuarioNavigation.Nombre ?? "Desconocido"},
         new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Libro", ValueSelector = item => item.LibroNavigation.Descripcion ?? "Desconocido"},
-            new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Cantidad días", ValueSelector = item => item.UsuarioNavigation.Nombre ?? "Desconocido"},
-        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "MontoxDías", ValueSelector = item => item.UsuarioNavigation.Nombre ?? "Desconocido"},
-        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Fecha prestamo", ValueSelector = item => item.FechaPrestamo.Value.ToString("dd / MM / yyyy") ?? "No especificado"},
-        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Fecha devolución", ValueSelector = item => item.FechaDevolucion.Value.ToString("dd / MM / yyyy") ?? "No especificado"},
-        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Prestado" : "Devuelto")}"}
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Cantidad días", ValueSelector = item => item.CantidadDias ?? 0},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "MontoxDías", ValueSelector = item => item?.MontoXdia ?? 0},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Fecha prestamo", ValueSelector = item => item.FechaPrestamo.HasValue ? item.FechaPrestamo.Value.ToString("dd / MM / yyyy") : "No especificado"},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Fecha devolución", ValueSelector = item => item.FechaDevolucion.HasValue ? item.FechaDevolucion.Value.ToString("dd / MM / yyyy") : "No especificado"},
+        new ColumnConfig<Biblioteca.Models.PrestamoDevolucion> { Header = "Estado", ValueSelector = item =>  $"<span class='{(item.Estado ? "green-circle" : "red-circle")}'></span> {(item.Estado ? "Devuelto" : "Prestado")}"}
     };
 }
 
-@await Html.PartialAsync("_IndexHeader", ViewData["Title"].ToString())
-@await Html.PartialAsync("TableElementPrestamo", Tuple.Create(Model, columns))
+
+<h1 class="title_main">Prestamos</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a class="text-mute text-decoration-none text-secondary" asp-area="" asp-controller="Home" asp-action="Index">
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item fw-bolder active" aria-current="page">Prestamos</li>
+    </ol>
+</nav>
+
+<div class="mt-4">
+    <div class="d-flex justify-content-left align-items-center mb-3">
+        <a class="btn btn-outline-primary bg-white text-primary text-uppercase fst-italic" asp-action="Create">
+            <img class="iconos-sm" src="/images/icon_plus.svg" alt="Icono plus" /> 
+            <span class="p-1">Crear Prestamo</span>
+        </a>
+    </div>
+</div>
+<hr />
+<div class="my-4">
+    <form asp-action="index" method="post">
+        <div class="row">
+            <div class="col-3 col-xs-12 form-group">
+                <label asp-for="FechaInicioPrestamo"></label>
+                <input asp-for="FechaInicioPrestamo" class="form-control" />
+                <span asp-validation-for="FechaInicioPrestamo" class="text-danger"></span>
+            </div>
+            <div class="col-3 col-xs-12 form-group">
+                <label asp-for="FechaFinPrestamo"></label>
+                <input asp-for="FechaFinPrestamo" class="form-control" />
+                <span asp-validation-for="FechaFinPrestamo" class="text-danger"></span>
+            </div>
+            <div class="col-3 col-xs-12 form-group">
+                <label asp-for="FechaInicioDevolucion"></label>
+                <input asp-for="FechaInicioDevolucion" class="form-control" />
+                <span asp-validation-for="FechaInicioDevolucion" class="text-danger"></span>
+            </div>
+            <div class="col-3 col-xs-12 form-group">
+                <label asp-for="FechaFinDevolucion"></label>
+                <input asp-for="FechaFinDevolucion" class="form-control" />
+                <span asp-validation-for="FechaFinDevolucion" class="text-danger"></span>
+            </div>
+            <div class="col-3 col-xs-12 form-group">
+                <label asp-for="TipoBibliografia" class="control-label fw-bold"></label>
+                <select asp-for="TipoBibliografia" class ="form-control" asp-items="ViewBag.TipoBibliografia">
+                    <option value="">Seleccione un tipo de bibliografía</option>
+                </select>
+                <span asp-validation-for="TipoBibliografia" class="text-danger"></span>
+            </div>
+            <div class="col-3 col-xs-12 form-group">
+                <label asp-for="Idioma" class="control-label fw-bold"></label>
+                <select asp-for="Idioma" class ="form-control" asp-items="ViewBag.Idioma">
+                    <option value="">Seleccione un idioma</option>
+                </select>
+                <span asp-validation-for="Idioma" class="text-danger"></span>
+            </div>
+                
+            <div class="col-3 row justify-content-center align-items-center form-group ">
+                <div class="col-6">
+                    <button class="btn btn-info text-white" type="submit">Buscar</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-light bg-white text-dark border border-dark" type="reset">
+                        Borrar Datos
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+@await Html.PartialAsync("TableElementPrestamo", Tuple.Create(Model.prestamoDevolucions, columns))

@@ -1,72 +1,71 @@
 @model Biblioteca.Models.PrestamoDevolucion
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Prestamo o Devolución";
 }
 
-<h1>Edit</h1>
 
-<h4>PrestamoDevolucion</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+<h1 class="title_main">Editar Prestamo o Devolución</h1>
+        
+<div class="mt-4">
+    <form class="row g-3" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="NoPrestamo" />
-            <div class="form-group">
-                <label asp-for="Empleado" class="control-label"></label>
-                <select asp-for="Empleado" class="form-control" asp-items="ViewBag.Empleado"></select>
+            <input type="hidden" asp-for="FechaDevolucion" />
+            <div class="col-7 col-xs-12 form-group">
+                <label asp-for="Empleado" class="control-label fw-bold"></label>
+                <select asp-for="Empleado" class ="form-control" asp-items="ViewBag.Empleado">
+                </select>
                 <span asp-validation-for="Empleado" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Libro" class="control-label"></label>
-                <select asp-for="Libro" class="form-control" asp-items="ViewBag.Libro"></select>
+            <div class="col-7 col-xs-12 form-group">
+                <label asp-for="Libro" class="control-label fw-bold"></label>
+                <select asp-for="Libro" class ="form-control" asp-items="ViewBag.Libro">
+                    <option value="">Seleccionar libro</option>
+                </select>
                 <span asp-validation-for="Libro" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario" class="control-label"></label>
-                <select asp-for="Usuario" class="form-control" asp-items="ViewBag.Usuario"></select>
+            <div class="col-7 col-xs-12 form-group">
+                <label asp-for="Usuario" class="control-label fw-bold"></label>
+                <select asp-for="Usuario" class ="form-control" asp-items="ViewBag.Usuario">
+                    <option value="">Seleccionar usuario</option>
+                </select>
                 <span asp-validation-for="Usuario" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaPrestamo" class="control-label"></label>
-                <input asp-for="FechaPrestamo" class="form-control" />
+            <div class="col-7 col-xs-12 col-md-3 form-group">
+                 <label asp-for="FechaPrestamo" class="control-label fw-bold"></label>
+                <input asp-for="FechaPrestamo" class="form-control" type="date"/>
                 <span asp-validation-for="FechaPrestamo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaDevolucion" class="control-label"></label>
-                <input asp-for="FechaDevolucion" class="form-control" />
-                <span asp-validation-for="FechaDevolucion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MontoXdia" class="control-label"></label>
+            <div class="col-7 col-xs-12 col-md-3 form-group">
+               <label asp-for="MontoXdia" class="control-label fw-bold"></label>
                 <input asp-for="MontoXdia" class="form-control" />
                 <span asp-validation-for="MontoXdia" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CantidadDias" class="control-label"></label>
+            <div class="col-7 col-xs-12 col-md-3 form-group">
+                <label asp-for="CantidadDias" class="control-label fw-bold"></label>
                 <input asp-for="CantidadDias" class="form-control" />
                 <span asp-validation-for="CantidadDias" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Comentario" class="control-label"></label>
+            <div class="col-7 col-xs-12 col-md-3 form-group">
+               <label asp-for="Comentario" class="control-label fw-bold"></label>
                 <input asp-for="Comentario" class="form-control" />
                 <span asp-validation-for="Comentario" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
+           <div class="form-check form-switch ms-2">
+                <label class="form-check-label" for="flexSwitchCheckEstado">@Html.DisplayNameFor(model => model.Estado)</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEstado" asp-for="Estado" />
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="row row-cols-2 justify-content-start form-group mt-5">
+            <div class="col-1">
+                <button class="btn btn-primary" type="submit">Editar</button>
             </div>
+            <div class="col-1">
+                <a class="btn btn-light bg-white text-dark border border-dark" asp-action="Index">Regresar</a>
+            </div>
+        </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

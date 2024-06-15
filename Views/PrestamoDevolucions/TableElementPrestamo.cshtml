@@ -1,4 +1,5 @@
-@model Tuple<PaginatedList<Biblioteca.Models.PrestamoDevolucion>, List<ColumnConfig<Biblioteca.Models.PrestamoDevolucion>>>
+@model Tuple<PaginatedList<Biblioteca.Models.PrestamoDevolucion>,
+List<ColumnConfig<Biblioteca.Models.PrestamoDevolucion>>>
 
 @{
     var paginatedList = Model.Item1;
@@ -22,23 +23,25 @@
                 <tr>
                     @foreach (var column in columns)
                     {
-
                         <td class="@column.CssClass">@Html.Raw(column.ValueSelector(item))</td>
-
                     }
                     <td>
                         <a asp-action="Details" asp-route-id="@item.NoPrestamo"
                             class="btn border border-dark btn-light px-2">
                             <img class="iconos-sm" src="/images/icon_details.svg" alt="Icono details" />
                         </a>
-                        <a asp-action="Edit" asp-route-id="@item.NoPrestamo"
-                            class="btn border border-dark btn-light px-2">
+                        <a asp-action="Edit" asp-route-id="@item.NoPrestamo" class="btn border border-dark btn-light px-2">
                             <img class="iconos-sm" src="/images/icon_edit.svg" alt="Icono edit" />
                         </a>
-                        <a asp-action="Delete" asp-route-id="@item.NoPrestamo"
-                            class="btn border border-dark btn-light px-2">
-                            <img class="iconos-sm" src="/images/icon_delete.svg" alt="Icono delete" />
-                        </a>
+                        @if(item.Estado == false) {
+                             <form asp-action="Delete">
+                                <input type="hidden" name="id" value="@item.NoPrestamo" />
+
+                                <button class="btn border border-dark btn-light px-2" type="submit">
+                                    <img class="iconos-sm" src="/images/return_book_icon.svg" alt="Icono delete" />
+                                </button>
+                            </form>
+                        }
                     </td>
                 </tr>
             }
