@@ -23,7 +23,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item my-2
-                                ">
+                                    ">
                                 <div class="row">
                                     <div class="col-4">
                                         <img src="/images/user_profile_admin.png" class="img-fluid h-80 w-80 mx-1"
@@ -120,11 +120,12 @@
                                 </div>
                             </a>
                         </li>
-                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrador") || User.IsInRole("Usuario")))
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrador") ||
+                        User.IsInRole("Usuario")))
                         {
                             <li class="nav-item my-2 @Html.IsActive("PrestamoDevolucions", "Index")">
-                                <a class="nav-link ps-3 align-middle text-white px-0" asp-area="" asp-controller="PrestamoDevolucions"
-                                    asp-action="Index">
+                                <a class="nav-link ps-3 align-middle text-white px-0"
+                                    asp-controller="PrestamoDevolucions" asp-action="Index">
                                     <div class="row row-cols-2 align-items-center">
                                         <img class="iconos-width" src="/images/icon_loans.svg" alt="Icono usuarios" />
                                         <span class="ms-1 d-none d-sm-inline">Prestamos</span>
@@ -141,6 +142,11 @@
                                     </div>
                                 </a>
                             </li>
+
+                        }
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
+                        {
                             <li class="nav-item my-2 @Html.IsActive("UsuariosEmpleados", "Index")">
                                 <a class="nav-link ps-3 align-middle text-white px-0" asp-area=""
                                     asp-controller="UsuariosEmpleados" asp-action="Index">
